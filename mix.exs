@@ -7,6 +7,7 @@ defmodule SlackStarredExport.MixProject do
       version: "0.1.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
+      escript: escript(),
       deps: deps()
     ]
   end
@@ -16,6 +17,10 @@ defmodule SlackStarredExport.MixProject do
     [
       extra_applications: [:logger]
     ]
+  end
+
+  defp escript do
+    [main_module: SlackStarredExport.Cli]
   end
 
   # Run "mix help deps" to learn about dependencies.
