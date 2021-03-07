@@ -1,0 +1,152 @@
+{
+    "ok": true,
+    "items": [
+        {
+            "type": "message",
+            "channel": "C1VUNGG7L",
+            "message": {
+                "client_msg_id": "f38dd4b7-905b-43c7-989d-c41fa8cda534",
+                "type": "message",
+                "text": "I use the exact same task since like forever :smile:. Works well. Indeed walking with them through a real-life problem. Thing is you can't scale these easily. I recommend however for questions asked/tasks given to provide to interviewers clear \"Reasons why its asked\" and \"Examples of good answers/what indicates success\" and \"examples of bad answers/anti-patterns\" so that your assessment becomes a bit easier and comparable.\nIt can take a while to walk through and align all interviewers on these but it is an internal learning opportunity also and allows less senior engineers to take part in interviewing and there comes part of your scaling.",
+                "user": "U8S7YRMK2",
+                "ts": "1614163736.005600",
+                "team": "T0LV9U9NK",
+                "edited": {
+                    "user": "U8S7YRMK2",
+                    "ts": "1614163788.000000"
+                },
+                "blocks": [
+                    {
+                        "type": "rich_text",
+                        "block_id": "CkOeo",
+                        "elements": [
+                            {
+                                "type": "rich_text_section",
+                                "elements": [
+                                    {
+                                        "type": "text",
+                                        "text": "I use the exact same task since like forever "
+                                    },
+                                    {
+                                        "type": "emoji",
+                                        "name": "smile"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": ". Works well. Indeed walking with them through a real-life problem. Thing is you can't scale these easily. I recommend however for questions asked/tasks given to provide to interviewers clear \"Reasons why its asked\" and \"Examples of good answers/what indicates success\" and \"examples of bad answers/anti-patterns\" so that your assessment becomes a bit easier and comparable.\nIt can take a while to walk through and align all interviewers on these but it is an internal learning opportunity also and allows less senior engineers to take part in interviewing and there comes part of your scaling."
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "thread_ts": "1614004451.002500",
+                "parent_user_id": "U3VMPDEH0",
+                "is_starred": true,
+                "permalink": "https://example.slack.com/archives/C1VUNGG7L/p1614163736005600"
+            },
+            "date_create": 1614190396
+        },
+        {
+            "type": "message",
+            "channel": "C0LV45YRJ",
+            "message": {
+                "client_msg_id": "d09b59bf-0b0a-459c-8615-ce7b9fc39582",
+                "type": "message",
+                "text": "FYI recommending <https://retrotool.io> and <https://firepoker.io>\n\nBoth not very known but free and to the point. Our scrum masters use them to great effect.",
+                "user": "U8S7YRMK2",
+                "ts": "1613748935.045000",
+                "team": "T0LV9U9NK",
+                "attachments": [
+                    {
+                        "title": "RetroTool - free, simple and flexible online retrospectives",
+                        "title_link": "https://retrotool.io/",
+                        "text": "A dead simple tool for running retrospective sessions. Create a board and invite your team to collaborate.",
+                        "fallback": "RetroTool - free, simple and flexible online retrospectives",
+                        "image_url": "https://retrotool.io/images/homepage.jpg",
+                        "from_url": "https://retrotool.io/",
+                        "image_width": 269,
+                        "image_height": 250,
+                        "image_bytes": 54656,
+                        "service_icon": "https://retrotool.io/images/favicon.png",
+                        "service_name": "retrotool.io",
+                        "id": 1,
+                        "original_url": "https://retrotool.io"
+                    },
+                    {
+                        "service_name": "Firepoker",
+                        "title": "Firepoker.io - Agile Planning Poker® built with Firebase and AngularJS",
+                        "title_link": "https://firepoker.io/",
+                        "text": "Planning poker®, also called Scrum poker, is a consensus-based technique for estimating, mostly used to estimate effort or relative size of user stories in software development. In planning poker, members of the group make estimates by playing numbered cards face-down to the table, instead of speaking them aloud. The cards are revealed, and the estimates are then discussed.",
+                        "fallback": "Firepoker: Firepoker.io - Agile Planning Poker® built with Firebase and AngularJS",
+                        "thumb_url": "https://firepoker.io/images/icon_23936.png",
+                        "from_url": "https://firepoker.io/",
+                        "thumb_width": 1200,
+                        "thumb_height": 1200,
+                        "service_icon": "https://firepoker.io/favicon.ico",
+                        "id": 2,
+                        "original_url": "https://firepoker.io"
+                    }
+                ],
+                "blocks": [
+                    {
+                        "type": "rich_text",
+                        "block_id": "l55H",
+                        "elements": [
+                            {
+                                "type": "rich_text_section",
+                                "elements": [
+                                    {
+                                        "type": "text",
+                                        "text": "FYI recommending "
+                                    },
+                                    {
+                                        "type": "link",
+                                        "url": "https://retrotool.io"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": " and "
+                                    },
+                                    {
+                                        "type": "link",
+                                        "url": "https://firepoker.io"
+                                    },
+                                    {
+                                        "type": "text",
+                                        "text": "\n\nBoth not very known but free and to the point. Our scrum masters use them to great effect."
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "thread_ts": "1613748935.045000",
+                "reply_count": 2,
+                "reply_users_count": 2,
+                "latest_reply": "1613987009.008700",
+                "reply_users": [
+                    "UH9T09HMW",
+                    "U2WQE893K"
+                ],
+                "subscribed": false,
+                "is_starred": true,
+                "reactions": [
+                    {
+                        "name": "+1",
+                        "users": [
+                            "UH9T09HMW",
+                            "UED1XTJVB"
+                        ],
+                        "count": 2
+                    }
+                ],
+                "permalink": "https://example.slack.com/archives/C0LV45YRJ/p1613748935045000"
+            },
+            "date_create": 1613988586
+        }
+    ],
+    "response_metadata": {
+        "next_cursor": ""
+    }
+}

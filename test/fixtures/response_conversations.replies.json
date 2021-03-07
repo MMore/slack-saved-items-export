@@ -1,0 +1,181 @@
+{
+    "ok": true,
+    "messages": [
+        {
+            "client_msg_id": "d09b59bf-0b0a-459c-8615-ce7b9fc39582",
+            "type": "message",
+            "text": "FYI recommending <https://retrotool.io> and <https://firepoker.io>\n\nBoth not very known but free and to the point. Our scrum masters use them to great effect.",
+            "user": "U8S7YRMK2",
+            "ts": "1613748935.045000",
+            "team": "T0LV9U9NK",
+            "attachments": [
+                {
+                    "title": "RetroTool - free, simple and flexible online retrospectives",
+                    "title_link": "https://retrotool.io/",
+                    "text": "A dead simple tool for running retrospective sessions. Create a board and invite your team to collaborate.",
+                    "fallback": "RetroTool - free, simple and flexible online retrospectives",
+                    "image_url": "https://retrotool.io/images/homepage.jpg",
+                    "from_url": "https://retrotool.io/",
+                    "image_width": 269,
+                    "image_height": 250,
+                    "image_bytes": 54656,
+                    "service_icon": "https://retrotool.io/images/favicon.png",
+                    "service_name": "retrotool.io",
+                    "id": 1,
+                    "original_url": "https://retrotool.io"
+                },
+                {
+                    "service_name": "Firepoker",
+                    "title": "Firepoker.io - Agile Planning Poker® built with Firebase and AngularJS",
+                    "title_link": "https://firepoker.io/",
+                    "text": "Planning poker®, also called Scrum poker, is a consensus-based technique for estimating, mostly used to estimate effort or relative size of user stories in software development. In planning poker, members of the group make estimates by playing numbered cards face-down to the table, instead of speaking them aloud. The cards are revealed, and the estimates are then discussed.",
+                    "fallback": "Firepoker: Firepoker.io - Agile Planning Poker® built with Firebase and AngularJS",
+                    "thumb_url": "https://firepoker.io/images/icon_23936.png",
+                    "from_url": "https://firepoker.io/",
+                    "thumb_width": 1200,
+                    "thumb_height": 1200,
+                    "service_icon": "https://firepoker.io/favicon.ico",
+                    "id": 2,
+                    "original_url": "https://firepoker.io"
+                }
+            ],
+            "blocks": [
+                {
+                    "type": "rich_text",
+                    "block_id": "l55H",
+                    "elements": [
+                        {
+                            "type": "rich_text_section",
+                            "elements": [
+                                {
+                                    "type": "text",
+                                    "text": "FYI recommending "
+                                },
+                                {
+                                    "type": "link",
+                                    "url": "https://retrotool.io"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": " and "
+                                },
+                                {
+                                    "type": "link",
+                                    "url": "https://firepoker.io"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "\n\nBoth not very known but free and to the point. Our scrum masters use them to great effect."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "thread_ts": "1613748935.045000",
+            "reply_count": 2,
+            "reply_users_count": 2,
+            "latest_reply": "1613987009.008700",
+            "reply_users": [
+                "UH9T09HMW",
+                "U2WQE893K"
+            ],
+            "subscribed": false,
+            "is_starred": true,
+            "reactions": [
+                {
+                    "name": "+1",
+                    "users": [
+                        "UH9T09HMW",
+                        "UED1XTJVB"
+                    ],
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "client_msg_id": "8aebb718-4f62-4e6a-bd3f-b9d57ecdb736",
+            "type": "message",
+            "text": "<@U8S7YRMK2> Looks interesting, thanks for the recommendation!",
+            "user": "UH9T09HMW",
+            "ts": "1613766054.045300",
+            "team": "T0LV9U9NK",
+            "blocks": [
+                {
+                    "type": "rich_text",
+                    "block_id": "9IF",
+                    "elements": [
+                        {
+                            "type": "rich_text_section",
+                            "elements": [
+                                {
+                                    "type": "user",
+                                    "user_id": "U8S7YRMK2"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": " Looks interesting, thanks for the recommendation!"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "thread_ts": "1613748935.045000",
+            "parent_user_id": "U8S7YRMK2"
+        },
+        {
+            "client_msg_id": "cc974988-2a45-45fa-b9f5-403d2edada40",
+            "type": "message",
+            "text": "Can also highly recommend <https://metroretro.io/> which is also free!",
+            "user": "U2WQE893K",
+            "ts": "1613987009.008700",
+            "team": "T0LV9U9NK",
+            "attachments": [
+                {
+                    "title": "Free Agile Retrospective Tool | Metro Retro",
+                    "title_link": "https://metroretro.io/",
+                    "text": "Metro Retro is a free web app that helps teams run productive, engaging and fun retrospectives.",
+                    "fallback": "Free Agile Retrospective Tool | Metro Retro",
+                    "image_url": "https://uploads-ssl.webflow.com/5eeb48c009c3d92d97577742/5f0c849e15132df605e57ace_MRopengraph.png",
+                    "from_url": "https://metroretro.io/",
+                    "image_width": 476,
+                    "image_height": 250,
+                    "image_bytes": 40532,
+                    "service_icon": "https://metroretro.io/favicon.ico",
+                    "service_name": "metroretro.io",
+                    "id": 1,
+                    "original_url": "https://metroretro.io/"
+                }
+            ],
+            "blocks": [
+                {
+                    "type": "rich_text",
+                    "block_id": "VYu",
+                    "elements": [
+                        {
+                            "type": "rich_text_section",
+                            "elements": [
+                                {
+                                    "type": "text",
+                                    "text": "Can also highly recommend "
+                                },
+                                {
+                                    "type": "link",
+                                    "url": "https://metroretro.io/"
+                                },
+                                {
+                                    "type": "text",
+                                    "text": " which is also free!"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "thread_ts": "1613748935.045000",
+            "parent_user_id": "U8S7YRMK2"
+        }
+    ],
+    "has_more": false
+}

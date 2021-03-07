@@ -1,0 +1,44 @@
+{
+    "ok": true,
+    "channel": {
+        "id": "C0LV45YRJ",
+        "name": "general",
+        "is_channel": true,
+        "is_group": false,
+        "is_im": false,
+        "created": 1455207689,
+        "is_archived": false,
+        "is_general": true,
+        "unlinked": 0,
+        "name_normalized": "general",
+        "is_shared": false,
+        "parent_conversation": null,
+        "creator": "U0LV793GB",
+        "is_read_only": false,
+        "is_thread_only": false,
+        "is_non_threadable": false,
+        "is_ext_shared": false,
+        "is_org_shared": false,
+        "shared_team_ids": [
+            "EXAMPLE"
+        ],
+        "pending_shared": [],
+        "pending_connected_team_ids": [],
+        "is_pending_ext_shared": false,
+        "is_member": true,
+        "is_private": false,
+        "is_mpim": false,
+        "last_read": "1614872773.031800",
+        "topic": {
+            "value": "This is the general chat.",
+            "creator": "U2NRK3SA0",
+            "last_set": 1480362790
+        },
+        "purpose": {
+            "value": "Purpose",
+            "creator": "U0ND3MJ6A",
+            "last_set": 1460533919
+        },
+        "previous_names": []
+    }
+}
