@@ -1,0 +1,15 @@
+<h1>List</h1>
+
+<ul>
+  <%= for message <- messages do %>
+  <li><%= message.user_name %> @ <%= message.date_created %> on <%= message.channel_name %>: <%= message.text %>
+    <br><br>
+    Replies:
+    <ul>
+      <%= for reply <- message.replies do %>
+      <li><%= SlackStarredExport.ExportView.show_reply(reply) %></li>
+      <% end %>
+    </ul>
+  </li>
+  <% end %>
+</ul>

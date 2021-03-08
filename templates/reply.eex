@@ -1,0 +1,1 @@
+Reply: <%= reply.user_name %>: <%= reply.text %>
