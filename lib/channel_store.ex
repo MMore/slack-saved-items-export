@@ -1,5 +1,5 @@
 defmodule SlackStarredExport.ChannelStore do
-  alias SlackStarredExport.StarredMessage
+  alias SlackStarredExport.Data
 
   use GenServer
 
@@ -23,7 +23,7 @@ defmodule SlackStarredExport.ChannelStore do
   def handle_call({:get_channel_name, channel_id}, _from, state) do
     case List.keyfind(state, channel_id, 0) do
       nil ->
-        channel_name = StarredMessage.get_channel_name(channel_id)
+        channel_name = Data.get_channel_name(channel_id)
         new_state = [{channel_id, channel_name} | state]
         {:reply, channel_name, new_state}
 

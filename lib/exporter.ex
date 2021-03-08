@@ -5,8 +5,6 @@ defmodule SlackStarredExport.Exporter do
   def export() do
     {:ok, response} = SlackClient.get_starred_items()
 
-    response.body["items"]
-    |> Enum.filter(fn x -> x["type"] == "message" end)
-    |> Parser.parse_starred_messages()
+    Parser.parse_starred_items(response.body["items"])
   end
 end

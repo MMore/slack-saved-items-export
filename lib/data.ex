@@ -1,14 +1,23 @@
-defmodule SlackStarredExport.StarredMessage do
+defmodule SlackStarredExport.Data do
   alias SlackStarredExport.SlackClient
 
-  defstruct channel_id: nil,
-            channel_name: nil,
-            date_created: nil,
-            text: nil,
-            user_id: nil,
-            user_name: nil,
-            message_id: nil,
-            replies: []
+  defmodule StarredMessage do
+    defstruct channel_id: nil,
+              channel_name: nil,
+              date_created: nil,
+              text: nil,
+              user_id: nil,
+              user_name: nil,
+              message_id: nil,
+              replies: []
+  end
+
+  defmodule Reply do
+    defstruct message_id: nil,
+              text: nil,
+              user_id: nil,
+              user_name: nil
+  end
 
   def get_channel_name(channel_id) do
     {:ok, response} = SlackClient.get_channel_info(channel_id)
