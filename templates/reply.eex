@@ -1,1 +1,8 @@
-Reply: <%= reply.user_name %>: <%= reply.text %>
+<div class="flex-1 border-dotted border-2">
+  <div class="font-bold tracking-wide">
+    <%= reply.user_name %>
+  </div>
+  <div class="italic">
+    <%= reply.text %>
+  </div>
+</div>

@@ -14,10 +14,11 @@ defmodule SlackStarredExport.Parser do
   defp parse_starred_message(message) do
     %Data.StarredMessage{
       channel_id: message["channel"],
-      date_created: message["date_create"],
+      date_created: DateTime.from_unix!(message["date_create"]),
+      message_id: message["message"]["ts"],
+      permalink: message["message"]["permalink"],
       text: message["message"]["text"],
-      user_id: message["message"]["user"],
-      message_id: message["message"]["ts"]
+      user_id: message["message"]["user"]
     }
   end
 

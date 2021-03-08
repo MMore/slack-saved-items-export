@@ -5,10 +5,11 @@ defmodule SlackStarredExport.Data do
     defstruct channel_id: nil,
               channel_name: nil,
               date_created: nil,
+              message_id: nil,
+              permalink: nil,
               text: nil,
               user_id: nil,
               user_name: nil,
-              message_id: nil,
               replies: []
   end
 

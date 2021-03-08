@@ -17,7 +17,7 @@ defmodule ExportTest do
             user_name: "Mickey Mouse"
           }
         ],
-        text: "A message without replies :smile:",
+        text: "A message with replies :smile:",
         user_id: "U8S7YRMK2",
         user_name: "user_name"
       }
@@ -25,6 +25,6 @@ defmodule ExportTest do
 
     # TODO: improve assertions
     assert Exporter.decorate(messages) =~ ~r(Mickey Mouse)
-    assert Exporter.decorate(messages) =~ ~r(Replies:\n    <ul>)
+    assert Exporter.decorate(messages) =~ ~r(message with replies)
   end
 end

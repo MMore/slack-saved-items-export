@@ -1,15 +1,43 @@
-<h1>List</h1>
+<!doctype html>
+<html>
+<head>
+  <title>Slack Starred Messages - Export</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
 
-<ul>
-  <%= for message <- messages do %>
-  <li><%= message.user_name %> @ <%= message.date_created %> on <%= message.channel_name %>: <%= message.text %>
-    <br><br>
-    Replies:
-    <ul>
-      <%= for reply <- message.replies do %>
-      <li><%= SlackStarredExport.ExportView.show_reply(reply) %></li>
-      <% end %>
-    </ul>
-  </li>
-  <% end %>
-</ul>
+<div class="grid grid-cols-1 m-3">
+  <h1 class="text-3xl font-bold leading-7 text-gray-900 mb-5">
+    List Export
+  </h1>
+
+  <div class="flex flex-col space-y-2">
+    <%= for message <- messages do %>
+    <div class="flex-1 bg-gray-100 border-2">
+      <div class="flex flex-wrap">
+        <div class="font-bold tracking-wide">
+          <span title="Hasdsad"><%= message.user_name %></span>
+        </div>
+        <div class="font-light text-gray-500 ml-3">
+          <a href="<%= message.permalink %>" target="_blank" class="hover:underline"><%= message.date_created %></a>
+        </div>
+        <div class="font-light text-gray-500 ml-3">
+          #<%= message.channel_name %>
+        </div>
+      </div>
+      <div class="italic">
+        <%= message.text %>
+      </div>
+      <div class="flex flex-col space-y-1 ml-7">
+        <%= for reply <- message.replies do %>
+          <%= SlackStarredExport.ExportView.show_reply(reply) %>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+
+</body>
+</html>

@@ -25,8 +25,9 @@ defmodule ParserTest do
              %SlackStarredExport.Data.StarredMessage{
                channel_id: "C1VUNGG7L",
                channel_name: nil,
-               date_created: 1_614_190_396,
+               date_created: ~U[2021-02-24 18:13:16Z],
                message_id: "1614163736.005600",
+               permalink: "https://example.slack.com/archives/C1VUNGG7L/p1614163736005600",
                replies: [],
                text: "A message without replies :smile:",
                user_id: "U8S7YRMK2",
@@ -35,8 +36,9 @@ defmodule ParserTest do
              %SlackStarredExport.Data.StarredMessage{
                channel_id: "C0LV45YRJ",
                channel_name: nil,
-               date_created: 1_613_988_586,
+               date_created: ~U[2021-02-22 10:09:46Z],
                message_id: "1613748935.045000",
+               permalink: "https://example.slack.com/archives/C0LV45YRJ/p1613748935045000",
                replies: [],
                text:
                  "FYI recommending <https://retrotool.io>\n not very known but free and to the point. Our scrum masters use them to great effect.",
