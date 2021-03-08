@@ -3,15 +3,15 @@ defmodule SlackStarredExport.Parser do
   alias SlackStarredExport.ChannelStore
   alias SlackStarredExport.UserStore
 
-  def parse_starred_items(items) do
+  def parse_starred_items(items, enricher_fn \\ &enrich_starred_message/1) do
     Enum.filter(items, fn x -> x["type"] == "message" end)
     |> Enum.map(fn m ->
       parse_starred_message(m)
-      |> enrich_starred_message()
+      |> enricher_fn.()
     end)
   end
 
-  def parse_starred_message(message) do
+  defp parse_starred_message(message) do
     %Data.StarredMessage{
       channel_id: message["channel"],
       date_created: message["date_create"],
@@ -21,32 +21,38 @@ defmodule SlackStarredExport.Parser do
     }
   end
 
-  def enrich_starred_message(message) do
-    channel_name_task = Task.async(ChannelStore, :get_channel_name, [message.channel_id])
-    user_name_task = Task.async(UserStore, :get_user_name, [message.user_id])
+  def enrich_starred_message(
+        message,
+        channel_store \\ ChannelStore,
+        user_store \\ UserStore,
+        data_mod \\ Data,
+        reply_parser_fn \\ &parse_replies/1
+      ) do
+    channel_name_task = Task.async(channel_store, :get_channel_name, [message.channel_id])
+    user_name_task = Task.async(user_store, :get_user_name, [message.user_id])
 
-    replies_task = Task.async(Data, :get_replies, [message.channel_id, message.message_id])
+    replies_task = Task.async(data_mod, :get_replies, [message.channel_id, message.message_id])
 
     %Data.StarredMessage{
       message
       | channel_name: Task.await(channel_name_task),
         user_name: Task.await(user_name_task),
-        replies: parse_replies(Task.await(replies_task), message)
+        replies: reply_parser_fn.(Task.await(replies_task))
     }
   end
 
-  def parse_replies(replies, _message) do
+  def parse_replies(replies, enricher_fn \\ &enrich_reply/1) do
     # don't show parent message again
     Enum.filter(replies, fn x ->
       x["ts"] != x["thread_ts"]
     end)
     |> Enum.map(fn x ->
       parse_reply(x)
-      |> enrich_reply()
+      |> enricher_fn.()
     end)
   end
 
-  def parse_reply(reply) do
+  defp parse_reply(reply) do
     %Data.Reply{
       text: reply["text"],
       message_id: reply["ts"],
@@ -54,8 +60,8 @@ defmodule SlackStarredExport.Parser do
     }
   end
 
-  def enrich_reply(reply) do
-    user_name_task = Task.async(UserStore, :get_user_name, [reply.user_id])
+  def enrich_reply(reply, user_store \\ UserStore) do
+    user_name_task = Task.async(user_store, :get_user_name, [reply.user_id])
 
     %Data.Reply{
       reply

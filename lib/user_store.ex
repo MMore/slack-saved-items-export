@@ -20,10 +20,10 @@ defmodule SlackStarredExport.UserStore do
     {:ok, init_arg}
   end
 
-  def handle_call({:get_user_name, user_id}, _from, state) do
+  def handle_call({:get_user_name, user_id}, _from, state, data_mod \\ Data) do
     case List.keyfind(state, user_id, 0) do
       nil ->
-        user_name = Data.get_user_name(user_id)
+        user_name = data_mod.get_user_name(user_id)
         new_state = [{user_id, user_name} | state]
         {:reply, user_name, new_state}
 

@@ -20,10 +20,10 @@ defmodule SlackStarredExport.ChannelStore do
     {:ok, init_arg}
   end
 
-  def handle_call({:get_channel_name, channel_id}, _from, state) do
+  def handle_call({:get_channel_name, channel_id}, _from, state, data_mod \\ Data) do
     case List.keyfind(state, channel_id, 0) do
       nil ->
-        channel_name = Data.get_channel_name(channel_id)
+        channel_name = data_mod.get_channel_name(channel_id)
         new_state = [{channel_id, channel_name} | state]
         {:reply, channel_name, new_state}
 

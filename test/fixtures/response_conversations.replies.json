@@ -4,7 +4,7 @@
         {
             "client_msg_id": "d09b59bf-0b0a-459c-8615-ce7b9fc39582",
             "type": "message",
-            "text": "FYI recommending <https://retrotool.io> and <https://firepoker.io>\n\nBoth not very known but free and to the point. Our scrum masters use them to great effect.",
+            "text": "FYI recommending <https://retrotool.io>\n not very known but free and to the point. Our scrum masters use them to great effect.",
             "user": "U8S7YRMK2",
             "ts": "1613748935.045000",
             "team": "T0LV9U9NK",
@@ -23,20 +23,6 @@
                     "service_name": "retrotool.io",
                     "id": 1,
                     "original_url": "https://retrotool.io"
-                },
-                {
-                    "service_name": "Firepoker",
-                    "title": "Firepoker.io - Agile Planning Poker® built with Firebase and AngularJS",
-                    "title_link": "https://firepoker.io/",
-                    "text": "Planning poker®, also called Scrum poker, is a consensus-based technique for estimating, mostly used to estimate effort or relative size of user stories in software development. In planning poker, members of the group make estimates by playing numbered cards face-down to the table, instead of speaking them aloud. The cards are revealed, and the estimates are then discussed.",
-                    "fallback": "Firepoker: Firepoker.io - Agile Planning Poker® built with Firebase and AngularJS",
-                    "thumb_url": "https://firepoker.io/images/icon_23936.png",
-                    "from_url": "https://firepoker.io/",
-                    "thumb_width": 1200,
-                    "thumb_height": 1200,
-                    "service_icon": "https://firepoker.io/favicon.ico",
-                    "id": 2,
-                    "original_url": "https://firepoker.io"
                 }
             ],
             "blocks": [
@@ -57,15 +43,7 @@
                                 },
                                 {
                                     "type": "text",
-                                    "text": " and "
-                                },
-                                {
-                                    "type": "link",
-                                    "url": "https://firepoker.io"
-                                },
-                                {
-                                    "type": "text",
-                                    "text": "\n\nBoth not very known but free and to the point. Our scrum masters use them to great effect."
+                                    "text": "\n not very known but free and to the point. Our scrum masters use them to great effect."
                                 }
                             ]
                         }
@@ -127,7 +105,7 @@
         {
             "client_msg_id": "cc974988-2a45-45fa-b9f5-403d2edada40",
             "type": "message",
-            "text": "Can also highly recommend <https://metroretro.io/> which is also free!",
+            "text": "Can also highly recommend <https://metroretro.io/>",
             "user": "U2WQE893K",
             "ts": "1613987009.008700",
             "team": "T0LV9U9NK",
@@ -163,10 +141,6 @@
                                 {
                                     "type": "link",
                                     "url": "https://metroretro.io/"
-                                },
-                                {
-                                    "type": "text",
-                                    "text": " which is also free!"
                                 }
                             ]
                         }

@@ -44,7 +44,7 @@ defmodule SlackStarredExportSlackClientTest do
   test "get starred items" do
     assert {:ok, %Tesla.Env{} = env} = SlackStarredExport.SlackClient.get_starred_items()
     assert env.status == 200
-    assert Enum.count(env.body["items"]) == 2
+    assert Enum.count(env.body["items"]) == 3
   end
 
   test "get replies for message" do

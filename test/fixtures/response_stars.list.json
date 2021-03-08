@@ -2,12 +2,15 @@
     "ok": true,
     "items": [
         {
+            "type": "attachment"
+        },
+        {
             "type": "message",
             "channel": "C1VUNGG7L",
             "message": {
                 "client_msg_id": "f38dd4b7-905b-43c7-989d-c41fa8cda534",
                 "type": "message",
-                "text": "I use the exact same task since like forever :smile:. Works well. Indeed walking with them through a real-life problem. Thing is you can't scale these easily. I recommend however for questions asked/tasks given to provide to interviewers clear \"Reasons why its asked\" and \"Examples of good answers/what indicates success\" and \"examples of bad answers/anti-patterns\" so that your assessment becomes a bit easier and comparable.\nIt can take a while to walk through and align all interviewers on these but it is an internal learning opportunity also and allows less senior engineers to take part in interviewing and there comes part of your scaling.",
+                "text": "A message without replies :smile:",
                 "user": "U8S7YRMK2",
                 "ts": "1614163736.005600",
                 "team": "T0LV9U9NK",
@@ -25,15 +28,11 @@
                                 "elements": [
                                     {
                                         "type": "text",
-                                        "text": "I use the exact same task since like forever "
+                                        "text": "A message without replies "
                                     },
                                     {
                                         "type": "emoji",
                                         "name": "smile"
-                                    },
-                                    {
-                                        "type": "text",
-                                        "text": ". Works well. Indeed walking with them through a real-life problem. Thing is you can't scale these easily. I recommend however for questions asked/tasks given to provide to interviewers clear \"Reasons why its asked\" and \"Examples of good answers/what indicates success\" and \"examples of bad answers/anti-patterns\" so that your assessment becomes a bit easier and comparable.\nIt can take a while to walk through and align all interviewers on these but it is an internal learning opportunity also and allows less senior engineers to take part in interviewing and there comes part of your scaling."
                                     }
                                 ]
                             }
@@ -53,7 +52,7 @@
             "message": {
                 "client_msg_id": "d09b59bf-0b0a-459c-8615-ce7b9fc39582",
                 "type": "message",
-                "text": "FYI recommending <https://retrotool.io> and <https://firepoker.io>\n\nBoth not very known but free and to the point. Our scrum masters use them to great effect.",
+                "text": "FYI recommending <https://retrotool.io>\n not very known but free and to the point. Our scrum masters use them to great effect.",
                 "user": "U8S7YRMK2",
                 "ts": "1613748935.045000",
                 "team": "T0LV9U9NK",
@@ -72,20 +71,6 @@
                         "service_name": "retrotool.io",
                         "id": 1,
                         "original_url": "https://retrotool.io"
-                    },
-                    {
-                        "service_name": "Firepoker",
-                        "title": "Firepoker.io - Agile Planning Poker® built with Firebase and AngularJS",
-                        "title_link": "https://firepoker.io/",
-                        "text": "Planning poker®, also called Scrum poker, is a consensus-based technique for estimating, mostly used to estimate effort or relative size of user stories in software development. In planning poker, members of the group make estimates by playing numbered cards face-down to the table, instead of speaking them aloud. The cards are revealed, and the estimates are then discussed.",
-                        "fallback": "Firepoker: Firepoker.io - Agile Planning Poker® built with Firebase and AngularJS",
-                        "thumb_url": "https://firepoker.io/images/icon_23936.png",
-                        "from_url": "https://firepoker.io/",
-                        "thumb_width": 1200,
-                        "thumb_height": 1200,
-                        "service_icon": "https://firepoker.io/favicon.ico",
-                        "id": 2,
-                        "original_url": "https://firepoker.io"
                     }
                 ],
                 "blocks": [
@@ -106,15 +91,7 @@
                                     },
                                     {
                                         "type": "text",
-                                        "text": " and "
-                                    },
-                                    {
-                                        "type": "link",
-                                        "url": "https://firepoker.io"
-                                    },
-                                    {
-                                        "type": "text",
-                                        "text": "\n\nBoth not very known but free and to the point. Our scrum masters use them to great effect."
+                                        "text": "\n not very known but free and to the point. Our scrum masters use them to great effect."
                                     }
                                 ]
                             }
