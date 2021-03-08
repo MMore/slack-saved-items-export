@@ -5,7 +5,7 @@ defmodule SlackStarredExport.SlackClient do
 
   plug(Tesla.Middleware.Headers, [
     {"Content-Type", "application/x-www-form-urlencoded"},
-    {"Authorization", "Bearer TOKENHERE"}
+    {"Authorization", "Bearer #{get_token_from_environment()}"}
   ])
 
   plug(Tesla.Middleware.JSON)
@@ -24,5 +24,9 @@ defmodule SlackStarredExport.SlackClient do
 
   def get_user_info(user_id) do
     get("/users.info", query: [user: user_id])
+  end
+
+  defp get_token_from_environment() do
+    System.get_env(SlackStarredExport.Application.get_token_environment_variable_name())
   end
 end
