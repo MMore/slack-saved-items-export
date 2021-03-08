@@ -16,7 +16,7 @@ defmodule SlackStarredExport.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {SlackStarredExport.ChannelStore, []}
+      mod: {SlackStarredExport.Application, []}
     ]
   end
 

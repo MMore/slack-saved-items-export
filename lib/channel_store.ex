@@ -5,7 +5,7 @@ defmodule SlackStarredExport.ChannelStore do
 
   # Client
 
-  def start(_type, _args) do
+  def start_link(_args) do
     IO.puts("Starting channel store...")
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end

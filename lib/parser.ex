@@ -1,6 +1,7 @@
 defmodule SlackStarredExport.Parser do
   alias SlackStarredExport.StarredMessage
   alias SlackStarredExport.ChannelStore
+  alias SlackStarredExport.UserStore
 
   def parse_starred_messages(messages) do
     Enum.map(messages, fn m ->
@@ -21,7 +22,7 @@ defmodule SlackStarredExport.Parser do
 
   def enrich_starred_message(message) do
     channel_name_task = Task.async(ChannelStore, :get_channel_name, [message.channel_id])
-    user_name_task = Task.async(StarredMessage, :get_user_name, [message.user_id])
+    user_name_task = Task.async(UserStore, :get_user_name, [message.user_id])
 
     %StarredMessage{
       message
