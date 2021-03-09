@@ -1,6 +1,6 @@
 <div class="flex-1 border-dotted border-2">
   <div class="font-bold tracking-wide">
-    <%= reply.user_name %>
+    <%= reply.user_name %> <span class="font-light text-gray-500 ml-3"><%= reply.date_created %></span>
   </div>
   <div class="italic">
     <%= reply.text %>

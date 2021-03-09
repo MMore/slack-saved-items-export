@@ -77,11 +77,13 @@ defmodule ParserTest do
 
     assert Parser.parse_replies(replies["messages"], fn x -> x end) == [
              %SlackStarredExport.Data.Reply{
+               date_created: ~U[2021-02-19 20:20:54Z],
                message_id: "1613766054.045300",
                text: "<@U8S7YRMK2> Looks interesting, thanks for the recommendation!",
                user_id: "UH9T09HMW"
              },
              %SlackStarredExport.Data.Reply{
+               date_created: ~U[2021-02-22 09:43:29Z],
                message_id: "1613987009.008700",
                text: "Can also highly recommend <https://metroretro.io/>",
                user_id: "U2WQE893K"

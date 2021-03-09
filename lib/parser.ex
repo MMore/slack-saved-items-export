@@ -56,9 +56,14 @@ defmodule SlackStarredExport.Parser do
   defp parse_reply(reply) do
     %Data.Reply{
       text: reply["text"],
+      date_created: convert_slack_timestamp_to_datetime(reply["ts"]),
       message_id: reply["ts"],
       user_id: reply["user"]
     }
+  end
+
+  defp convert_slack_timestamp_to_datetime(timestamp) when is_binary(timestamp) do
+    String.split(timestamp, ".") |> hd() |> String.to_integer() |> DateTime.from_unix!()
   end
 
   def enrich_reply(reply, user_store \\ UserStore) do

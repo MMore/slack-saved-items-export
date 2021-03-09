@@ -14,7 +14,8 @@ defmodule SlackStarredExport.Data do
   end
 
   defmodule Reply do
-    defstruct message_id: nil,
+    defstruct date_created: nil,
+              message_id: nil,
               text: nil,
               user_id: nil,
               user_name: nil
