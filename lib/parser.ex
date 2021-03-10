@@ -17,9 +17,51 @@ defmodule SlackStarredExport.Parser do
       date_created: DateTime.from_unix!(message["date_create"]),
       message_id: message["message"]["ts"],
       permalink: message["message"]["permalink"],
-      text: message["message"]["text"],
+      text: parse_message_text(message["message"]["text"]),
       user_id: message["message"]["user"]
     }
+  end
+
+  def parse_message_text(text) do
+    parse_basic_formatting(text)
+    |> parse_mentions()
+    |> parse_url()
+  end
+
+  defp parse_basic_formatting(text) do
+    String.replace(
+      text,
+      ~r/\*([^<>]+)\*/,
+      ~s(<b>\\1</b>)
+    )
+    |> String.replace(
+      ~r/_([^<>]+)_/,
+      ~s(<i>\\1</i>)
+    )
+    |> String.replace(
+      ~r/~([^<>]+)~/,
+      ~s(<span class="line-through">\\1</span>)
+    )
+  end
+
+  defp parse_mentions(text) do
+    String.replace(
+      text,
+      ~r/<!([[:word:]]+)>/,
+      ~s(<span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@\\1</span>)
+    )
+  end
+
+  defp parse_url(text) do
+    String.replace(
+      text,
+      ~r"<(https?://[^\|>]+)\|([^>]+)>",
+      ~s(<a href="\\1" target="_blank" class="hover:underline text-gray-500">\\2</a>)
+    )
+    |> String.replace(
+      ~r"<(https?://[^>]+)>",
+      ~s(<a href="\\1" target="_blank" class="hover:underline text-gray-500">\\1</a>)
+    )
   end
 
   def enrich_starred_message(
@@ -55,9 +97,9 @@ defmodule SlackStarredExport.Parser do
 
   defp parse_reply(reply) do
     %Data.Reply{
-      text: reply["text"],
       date_created: convert_slack_timestamp_to_datetime(reply["ts"]),
       message_id: reply["ts"],
+      text: parse_message_text(reply["text"]),
       user_id: reply["user"]
     }
   end

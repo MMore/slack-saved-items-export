@@ -41,11 +41,47 @@ defmodule ParserTest do
                permalink: "https://example.slack.com/archives/C0LV45YRJ/p1613748935045000",
                replies: [],
                text:
-                 "FYI recommending <https://retrotool.io>\n not very known but free and to the point. Our scrum masters use them to great effect.",
+                 "FYI recommending <a href=\"https://retrotool.io\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://retrotool.io</a>\n not very known but free and to the point. Our scrum masters use them to great effect.",
                user_id: "U8S7YRMK2",
                user_name: nil
              }
            ]
+  end
+
+  describe "parses message text" do
+    test "for basic formatting" do
+      assert Parser.parse_message_text("Hey *, how? are_you?!.*") ==
+               ~s(Hey <b>, how? are_you?!.</b>)
+
+      assert Parser.parse_message_text("Hey _, how? are_you?!._") ==
+               ~s(Hey <i>, how? are_you?!.</i>)
+
+      assert Parser.parse_message_text("Hey ~, how? are_you?!.~") ==
+               ~s(Hey <span class="line-through">, how? are_you?!.</span>)
+    end
+
+    test "for mentions" do
+      assert Parser.parse_message_text("Hey <!channel>!") ==
+               ~s(Hey <span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@channel</span>!)
+
+      assert Parser.parse_message_text("Hey <!here>!") ==
+               ~s(Hey <span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@here</span>!)
+
+      assert Parser.parse_message_text("Hey <!something_else>!") ==
+               ~s(Hey <span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@something_else</span>!)
+    end
+
+    test "for URLs" do
+      assert Parser.parse_message_text(
+               "A text with <http://example.org> url and <https://example.org?a=2>"
+             ) ==
+               ~s(A text with <a href="http://example.org" target="_blank" class="hover:underline text-gray-500">http://example.org</a> url and <a href="https://example.org?a=2" target="_blank" class="hover:underline text-gray-500">https://example.org?a=2</a>)
+
+      assert Parser.parse_message_text(
+               "A text with <http://example.org|Example text_block 2-1> url and <http://example.org/?a=1|http://example.org/?a=1> url"
+             ) ==
+               ~s(A text with <a href="http://example.org" target="_blank" class="hover:underline text-gray-500">Example text_block 2-1</a> url and <a href="http://example.org/?a=1" target="_blank" class="hover:underline text-gray-500">http://example.org/?a=1</a> url)
+    end
   end
 
   test "enriches message with channel name and user name" do
@@ -85,7 +121,8 @@ defmodule ParserTest do
              %SlackStarredExport.Data.Reply{
                date_created: ~U[2021-02-22 09:43:29Z],
                message_id: "1613987009.008700",
-               text: "Can also highly recommend <https://metroretro.io/>",
+               text:
+                 "Can also highly recommend <a href=\"https://metroretro.io/\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://metroretro.io/</a>",
                user_id: "U2WQE893K"
              }
            ]
