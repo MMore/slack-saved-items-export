@@ -10,8 +10,8 @@ defmodule SlackStarredExport.UserStore do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def get_user_name(user_id) do
-    GenServer.call(__MODULE__, {:get_user_name, user_id})
+  def get_user_info(user_id) do
+    GenServer.call(__MODULE__, {:get_user_info, user_id})
   end
 
   # Server
@@ -20,15 +20,23 @@ defmodule SlackStarredExport.UserStore do
     {:ok, init_arg}
   end
 
-  def handle_call({:get_user_name, user_id}, _from, state, data_mod \\ Data) do
+  def handle_call({:get_user_info, user_id}, _from, state, data_mod \\ Data) do
     case List.keyfind(state, user_id, 0) do
       nil ->
-        user_name = data_mod.get_user_name(user_id)
-        new_state = [{user_id, user_name} | state]
-        {:reply, user_name, new_state}
+        user_info = data_mod.get_user_info(user_id)
 
-      {_user_id, user_name} ->
-        {:reply, user_name, state}
+        user = %Data.User{
+          user_id: user_id,
+          real_name: user_info["real_name"],
+          title: user_info["profile"]["title"],
+          image_24: user_info["profile"]["image_24"]
+        }
+
+        new_state = [{user_id, user} | state]
+        {:reply, user, new_state}
+
+      {_user_id, user} ->
+        {:reply, user, state}
     end
   end
 end

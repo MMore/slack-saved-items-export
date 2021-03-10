@@ -72,14 +72,14 @@ defmodule SlackStarredExport.Parser do
         reply_parser_fn \\ &parse_replies/1
       ) do
     channel_name_task = Task.async(channel_store, :get_channel_name, [message.channel_id])
-    user_name_task = Task.async(user_store, :get_user_name, [message.user_id])
+    user_info_task = Task.async(user_store, :get_user_info, [message.user_id])
 
     replies_task = Task.async(data_mod, :get_replies, [message.channel_id, message.message_id])
 
     %Data.StarredMessage{
       message
       | channel_name: Task.await(channel_name_task),
-        user_name: Task.await(user_name_task),
+        user: Task.await(user_info_task),
         replies: reply_parser_fn.(Task.await(replies_task))
     }
   end
@@ -109,11 +109,11 @@ defmodule SlackStarredExport.Parser do
   end
 
   def enrich_reply(reply, user_store \\ UserStore) do
-    user_name_task = Task.async(user_store, :get_user_name, [reply.user_id])
+    user_info_task = Task.async(user_store, :get_user_info, [reply.user_id])
 
     %Data.Reply{
       reply
-      | user_name: Task.await(user_name_task)
+      | user: Task.await(user_info_task)
     }
   end
 end

@@ -9,7 +9,7 @@ defmodule SlackStarredExport.Data do
               permalink: nil,
               text: nil,
               user_id: nil,
-              user_name: nil,
+              user: nil,
               replies: []
   end
 
@@ -18,7 +18,14 @@ defmodule SlackStarredExport.Data do
               message_id: nil,
               text: nil,
               user_id: nil,
-              user_name: nil
+              user: nil
+  end
+
+  defmodule User do
+    defstruct user_id: nil,
+              real_name: nil,
+              title: nil,
+              image_24: nil
   end
 
   def get_channel_name(channel_id) do
@@ -27,10 +34,10 @@ defmodule SlackStarredExport.Data do
     response.body["channel"]["name"]
   end
 
-  def get_user_name(user_id) do
+  def get_user_info(user_id) do
     {:ok, response} = SlackClient.get_user_info(user_id)
 
-    response.body["user"]["real_name"]
+    response.body["user"]
   end
 
   def get_replies(channel_id, message_id) do

@@ -18,7 +18,7 @@
     <div class="flex-1 bg-gray-100 border-2">
       <div class="flex flex-wrap">
         <div class="font-bold tracking-wide">
-          <span title="Hasdsad"><%= message.user_name %></span>
+          <span title="Hasdsad"><%= message.user.real_name %></span>
         </div>
         <div class="font-light text-gray-500 ml-3">
           <a href="<%= message.permalink %>" target="_blank" class="hover:underline"><%= message.date_created %></a>
