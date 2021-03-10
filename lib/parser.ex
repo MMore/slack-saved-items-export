@@ -22,9 +22,10 @@ defmodule SlackStarredExport.Parser do
     }
   end
 
-  def parse_message_text(text) do
+  def parse_message_text(text, user_store \\ UserStore) do
     parse_basic_formatting(text)
-    |> parse_mentions()
+    |> parse_general_mentions()
+    |> parse_user_mentions(user_store)
     |> parse_url()
   end
 
@@ -44,12 +45,29 @@ defmodule SlackStarredExport.Parser do
     )
   end
 
-  defp parse_mentions(text) do
+  defp parse_general_mentions(text) do
     String.replace(
       text,
       ~r/<!([[:word:]]+)>/,
       ~s(<span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@\\1</span>)
     )
+  end
+
+  defp parse_user_mentions(text, user_store) do
+    user_mention_regex = ~r/<@([[:word:]]+)>/
+
+    Regex.scan(user_mention_regex, text, capture: :all_but_first)
+    |> Enum.map(fn user_id ->
+      Task.async(user_store, :get_user_info, [hd(user_id)])
+    end)
+    |> Enum.map(&Task.await/1)
+    |> Enum.reduce(text, fn u, acc ->
+      String.replace(
+        acc,
+        "<@#{u.user_id}>",
+        ~s(<span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@#{u.real_name}</span>)
+      )
+    end)
   end
 
   defp parse_url(text) do
@@ -84,22 +102,22 @@ defmodule SlackStarredExport.Parser do
     }
   end
 
-  def parse_replies(replies, enricher_fn \\ &enrich_reply/1) do
+  def parse_replies(replies, enricher_fn \\ &enrich_reply/1, user_store \\ UserStore) do
     # don't show parent message again
     Enum.filter(replies, fn x ->
       x["ts"] != x["thread_ts"]
     end)
     |> Enum.map(fn x ->
-      parse_reply(x)
+      parse_reply(x, user_store)
       |> enricher_fn.()
     end)
   end
 
-  defp parse_reply(reply) do
+  defp parse_reply(reply, user_store) do
     %Data.Reply{
       date_created: convert_slack_timestamp_to_datetime(reply["ts"]),
       message_id: reply["ts"],
-      text: parse_message_text(reply["text"]),
+      text: parse_message_text(reply["text"], user_store),
       user_id: reply["user"]
     }
   end

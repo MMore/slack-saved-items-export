@@ -1,4 +1,4 @@
-defmodule ExportTest do
+defmodule ExporterTest do
   alias SlackStarredExport.Data
   alias SlackStarredExport.Exporter
   use ExUnit.Case
@@ -20,7 +20,7 @@ defmodule ExportTest do
             user: %Data.User{
               user_id: "UH9T09HMW",
               real_name: "Donald Duck",
-              title: "Duck King",
+              title: "Duck",
               image_24: "image24"
             }
           }
@@ -30,7 +30,7 @@ defmodule ExportTest do
         user: %Data.User{
           user_id: "U8S7YRMK2",
           real_name: "Mickey Mouse",
-          title: "Mice King",
+          title: "Mice",
           image_24: "image24"
         }
       }

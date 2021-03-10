@@ -6,17 +6,17 @@ defmodule UserStoreTest do
   @user_fake %Data.User{
     user_id: "user_id",
     real_name: "Mickey Mouse",
-    title: "Mice King",
+    title: "Mouse",
     image_24: "image24"
   }
 
   defmodule TestDataMod do
     def get_user_info(user_id) do
-      send(self(), :asked_for_user_info)
+      send(self(), {:asked_for_user_info, user_id})
 
       %{
         "real_name" => "Mickey Mouse",
-        "profile" => %{"title" => "Mice King", "image_24" => "image24"}
+        "profile" => %{"title" => "Mouse", "image_24" => "image24"}
       }
     end
   end
@@ -25,7 +25,7 @@ defmodule UserStoreTest do
     assert UserStore.handle_call({:get_user_info, "user_id"}, nil, [], TestDataMod) ==
              {:reply, @user_fake, [{"user_id", @user_fake}]}
 
-    assert_received :asked_for_user_info
+    assert_received {:asked_for_user_info, "user_id"}
   end
 
   test "asks NOT external service for user name if in cache" do
@@ -42,6 +42,6 @@ defmodule UserStoreTest do
            ) ==
              {:reply, @user_fake, current_state}
 
-    refute_received :asked_for_user_info
+    refute_received {:asked_for_user_info, "user_id"}
   end
 end

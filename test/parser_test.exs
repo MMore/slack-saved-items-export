@@ -12,7 +12,7 @@ defmodule ParserTest do
       %SlackStarredExport.Data.User{
         image_24: "image24",
         real_name: "real_name_#{user_id}",
-        title: "Mice King",
+        title: "Mouse",
         user_id: user_id
       }
     end
@@ -56,35 +56,42 @@ defmodule ParserTest do
 
   describe "parses message text" do
     test "for basic formatting" do
-      assert Parser.parse_message_text("Hey *, how? are_you?!.*") ==
+      assert Parser.parse_message_text("Hey *, how? are_you?!.*", TestStore) ==
                ~s(Hey <b>, how? are_you?!.</b>)
 
-      assert Parser.parse_message_text("Hey _, how? are_you?!._") ==
+      assert Parser.parse_message_text("Hey _, how? are_you?!._", TestStore) ==
                ~s(Hey <i>, how? are_you?!.</i>)
 
-      assert Parser.parse_message_text("Hey ~, how? are_you?!.~") ==
+      assert Parser.parse_message_text("Hey ~, how? are_you?!.~", TestStore) ==
                ~s(Hey <span class="line-through">, how? are_you?!.</span>)
     end
 
-    test "for mentions" do
-      assert Parser.parse_message_text("Hey <!channel>!") ==
+    test "for general mentions" do
+      assert Parser.parse_message_text("Hey <!channel>!", TestStore) ==
                ~s(Hey <span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@channel</span>!)
 
-      assert Parser.parse_message_text("Hey <!here>!") ==
+      assert Parser.parse_message_text("Hey <!here>!", TestStore) ==
                ~s(Hey <span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@here</span>!)
 
-      assert Parser.parse_message_text("Hey <!something_else>!") ==
+      assert Parser.parse_message_text("Hey <!something_else>!", TestStore) ==
                ~s(Hey <span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@something_else</span>!)
+    end
+
+    test "for user mentions" do
+      assert Parser.parse_message_text("Hey <@U8S7YRMK2>!", TestStore) ==
+               ~s(Hey <span class=\"bg-yellow-600 bg-opacity-75 text-yellow-200\">@real_name_U8S7YRMK2</span>!)
     end
 
     test "for URLs" do
       assert Parser.parse_message_text(
-               "A text with <http://example.org> url and <https://example.org?a=2>"
+               "A text with <http://example.org> url and <https://example.org?a=2>",
+               TestStore
              ) ==
                ~s(A text with <a href="http://example.org" target="_blank" class="hover:underline text-gray-500">http://example.org</a> url and <a href="https://example.org?a=2" target="_blank" class="hover:underline text-gray-500">https://example.org?a=2</a>)
 
       assert Parser.parse_message_text(
-               "A text with <http://example.org|Example text_block 2-1> url and <http://example.org/?a=1|http://example.org/?a=1> url"
+               "A text with <http://example.org|Example text_block 2-1> url and <http://example.org/?a=1|http://example.org/?a=1> url",
+               TestStore
              ) ==
                ~s(A text with <a href="http://example.org" target="_blank" class="hover:underline text-gray-500">Example text_block 2-1</a> url and <a href="http://example.org/?a=1" target="_blank" class="hover:underline text-gray-500">http://example.org/?a=1</a> url)
     end
@@ -111,7 +118,7 @@ defmodule ParserTest do
                user: %Data.User{
                  user_id: "U8S7YRMK2",
                  real_name: "real_name_U8S7YRMK2",
-                 title: "Mice King",
+                 title: "Mouse",
                  image_24: "image24"
                }
              }
@@ -122,11 +129,12 @@ defmodule ParserTest do
       File.read!(Path.join([__DIR__, "fixtures", "response_conversations.replies.json"]))
       |> Jason.decode!()
 
-    assert Parser.parse_replies(replies["messages"], fn x -> x end) == [
+    assert Parser.parse_replies(replies["messages"], fn x -> x end, TestStore) == [
              %Data.Reply{
                date_created: ~U[2021-02-19 20:20:54Z],
                message_id: "1613766054.045300",
-               text: "<@U8S7YRMK2> Looks interesting, thanks for the recommendation!",
+               text:
+                 "<span class=\"bg-yellow-600 bg-opacity-75 text-yellow-200\">@real_name_U8S7YRMK2</span> Looks interesting, thanks for the recommendation!",
                user_id: "UH9T09HMW"
              },
              %Data.Reply{
@@ -154,7 +162,7 @@ defmodule ParserTest do
                user: %Data.User{
                  user_id: "UH9T09HMW",
                  real_name: "real_name_UH9T09HMW",
-                 title: "Mice King",
+                 title: "Mouse",
                  image_24: "image24"
                }
              }
