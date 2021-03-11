@@ -1,15 +1,15 @@
-defmodule CliTest do
-  alias SlackStarredExport.Application
-  alias SlackStarredExport.Cli
+defmodule CLITest do
+  alias SSIExport.Application
+  alias SSIExport.CLI
   use ExUnit.Case
 
   import ExUnit.CaptureIO
 
   test "shows help if no/unknown arguments are given or --help is used" do
-    assert capture_io(fn -> Cli.main([]) end) == capture_io(fn -> Cli.print_help() end)
-    assert capture_io(fn -> Cli.main(["--help"]) end) == capture_io(fn -> Cli.print_help() end)
-    assert capture_io(fn -> Cli.main(["wtf"]) end) == capture_io(fn -> Cli.print_help() end)
-    assert capture_io(fn -> Cli.main(["--output"]) end) == capture_io(fn -> Cli.print_help() end)
+    assert capture_io(fn -> CLI.main([]) end) == capture_io(fn -> CLI.print_help() end)
+    assert capture_io(fn -> CLI.main(["--help"]) end) == capture_io(fn -> CLI.print_help() end)
+    assert capture_io(fn -> CLI.main(["wtf"]) end) == capture_io(fn -> CLI.print_help() end)
+    assert capture_io(fn -> CLI.main(["--output"]) end) == capture_io(fn -> CLI.print_help() end)
   end
 
   describe "environment variable is NOT set" do
@@ -19,7 +19,7 @@ defmodule CliTest do
       output_file = "export.html"
 
       assert capture_io(fn ->
-               Cli.main(["--output", output_file], fn x -> x end)
+               CLI.main(["--output", output_file], fn x -> x end)
              end) ==
                "error: environment variable #{Application.get_token_environment_variable_name()} is not set\n"
     end
@@ -33,7 +33,7 @@ defmodule CliTest do
       destination_path = Path.expand(output_file)
 
       assert capture_io(fn ->
-               Cli.main(["--output", output_file], fn x -> send(self(), {:output, x}) end)
+               CLI.main(["--output", output_file], fn x -> send(self(), {:output, x}) end)
              end) ==
                ~s(Exporting to "#{destination_path}"...\n...done.\n)
 

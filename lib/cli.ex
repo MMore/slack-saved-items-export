@@ -1,6 +1,6 @@
-defmodule SlackStarredExport.Cli do
-  alias SlackStarredExport.Application
-  alias SlackStarredExport.Exporter
+defmodule SSIExport.CLI do
+  alias SSIExport.Application
+  alias SSIExport.Exporter
 
   @token_environment_variable_name Application.get_token_environment_variable_name()
 
@@ -49,7 +49,7 @@ defmodule SlackStarredExport.Cli do
   end
 
   def print_help() do
-    IO.puts("Export your starred items in Slack as HTML\n")
+    IO.puts("Export your saved items in Slack as HTML\n")
     IO.puts("  --output <file-path> - Set the destination file path.")
     IO.puts("  --help - Print this help message\n")
     IO.puts("Before running set the environment variable #{@token_environment_variable_name}.")

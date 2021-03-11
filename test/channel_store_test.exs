@@ -1,5 +1,5 @@
 defmodule ChannelStoreTest do
-  alias SlackStarredExport.ChannelStore
+  alias SSIExport.ChannelStore
   use ExUnit.Case
 
   defmodule TestDataMod do

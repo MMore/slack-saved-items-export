@@ -1,4 +1,4 @@
-defmodule SlackStarredExportSlackClientTest do
+defmodule SlackClientTest do
   use ExUnit.Case
 
   import Tesla.Mock
@@ -41,30 +41,29 @@ defmodule SlackStarredExportSlackClientTest do
     |> Jason.decode!()
   end
 
-  test "get starred items" do
-    assert {:ok, %Tesla.Env{} = env} = SlackStarredExport.SlackClient.get_starred_items()
+  test "get saved items" do
+    assert {:ok, %Tesla.Env{} = env} = SSIExport.SlackClient.get_saved_items()
     assert env.status == 200
     assert Enum.count(env.body["items"]) == 3
   end
 
   test "get replies for message" do
     assert {:ok, %Tesla.Env{} = env} =
-             SlackStarredExport.SlackClient.get_replies("channel_id", "message_id")
+             SSIExport.SlackClient.get_replies("channel_id", "message_id")
 
     assert env.status == 200
     assert Enum.count(env.body["messages"]) == 3
   end
 
   test "get channel info" do
-    assert {:ok, %Tesla.Env{} = env} =
-             SlackStarredExport.SlackClient.get_channel_info("channel_id")
+    assert {:ok, %Tesla.Env{} = env} = SSIExport.SlackClient.get_channel_info("channel_id")
 
     assert env.status == 200
     assert env.body["channel"]["name"] == "general"
   end
 
   test "get user info" do
-    assert {:ok, %Tesla.Env{} = env} = SlackStarredExport.SlackClient.get_user_info("user_id")
+    assert {:ok, %Tesla.Env{} = env} = SSIExport.SlackClient.get_user_info("user_id")
 
     assert env.status == 200
     assert env.body["user"]["real_name"] == "Mickey Mouse"

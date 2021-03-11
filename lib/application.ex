@@ -1,14 +1,14 @@
-defmodule SlackStarredExport.Application do
+defmodule SSIExport.Application do
   def start(_type, _args) do
     children = [
-      {SlackStarredExport.ChannelStore, []},
-      {SlackStarredExport.UserStore, []}
+      {SSIExport.ChannelStore, []},
+      {SSIExport.UserStore, []}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one)
   end
 
   def get_token_environment_variable_name do
-    "SLACK_STARRED_EXPORT_OAUTH_TOKEN"
+    "SLACK_SAVED_ITEMS_EXPORT_OAUTH_TOKEN"
   end
 end

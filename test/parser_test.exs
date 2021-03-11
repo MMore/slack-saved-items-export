@@ -1,6 +1,6 @@
 defmodule ParserTest do
-  alias SlackStarredExport.Data
-  alias SlackStarredExport.Parser
+  alias SSIExport.Data
+  alias SSIExport.Parser
   use ExUnit.Case
 
   defmodule TestStore do
@@ -9,7 +9,7 @@ defmodule ParserTest do
     end
 
     def get_user_info(user_id) do
-      %SlackStarredExport.Data.User{
+      %SSIExport.Data.User{
         image_24: "image24",
         real_name: "real_name_#{user_id}",
         title: "Mouse",
@@ -22,13 +22,13 @@ defmodule ParserTest do
     end
   end
 
-  test "filters for messages and parses starred items to a defined data structure" do
+  test "filters for messages and parses saved items to a defined data structure" do
     messages =
       File.read!(Path.join([__DIR__, "fixtures", "response_stars.list.json"]))
       |> Jason.decode!()
 
-    assert Parser.parse_starred_items(messages["items"], fn x -> x end) == [
-             %Data.StarredMessage{
+    assert Parser.parse_saved_items(messages["items"], fn x -> x end) == [
+             %Data.SavedMessage{
                channel_id: "C1VUNGG7L",
                channel_name: nil,
                date_created: ~U[2021-02-24 18:13:16Z],
@@ -39,7 +39,7 @@ defmodule ParserTest do
                user_id: "U8S7YRMK2",
                user: nil
              },
-             %Data.StarredMessage{
+             %Data.SavedMessage{
                channel_id: "C0LV45YRJ",
                channel_name: nil,
                date_created: ~U[2021-02-22 10:09:46Z],
@@ -104,7 +104,7 @@ defmodule ParserTest do
   end
 
   test "enriches message with channel name and user name" do
-    message = %Data.StarredMessage{
+    message = %Data.SavedMessage{
       channel_id: "C1VUNGG7L",
       date_created: 1_614_190_396,
       message_id: "1614163736.005600",
@@ -112,8 +112,8 @@ defmodule ParserTest do
       user_id: "U8S7YRMK2"
     }
 
-    assert Parser.enrich_starred_message(message, TestStore, TestStore, TestStore, fn x -> x end) ==
-             %Data.StarredMessage{
+    assert Parser.enrich_saved_message(message, TestStore, TestStore, TestStore, fn x -> x end) ==
+             %Data.SavedMessage{
                channel_id: "C1VUNGG7L",
                channel_name: "channel_name_C1VUNGG7L",
                date_created: 1_614_190_396,

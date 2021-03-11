@@ -1,9 +1,9 @@
-defmodule SlackStarredExport.ExportView do
+defmodule SSIExport.ExportView do
   require EEx
 
   @template_path Path.expand("../templates", __DIR__)
 
-  EEx.function_from_file(:def, :list_starred_messages, Path.join(@template_path, "list.eex"), [
+  EEx.function_from_file(:def, :list_saved_messages, Path.join(@template_path, "list.eex"), [
     :messages,
     :slack_host,
     :generation_datetime

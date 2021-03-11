@@ -1,6 +1,6 @@
 defmodule UserStoreTest do
-  alias SlackStarredExport.Data
-  alias SlackStarredExport.UserStore
+  alias SSIExport.Data
+  alias SSIExport.UserStore
   use ExUnit.Case
 
   @user_fake %Data.User{

@@ -1,11 +1,11 @@
-defmodule SlackStarredExport.Exporter do
-  alias SlackStarredExport.SlackClient
-  alias SlackStarredExport.Parser
+defmodule SSIExport.Exporter do
+  alias SSIExport.SlackClient
+  alias SSIExport.Parser
 
   def export(destination_file_path) do
-    {:ok, response} = SlackClient.get_starred_items()
+    {:ok, response} = SlackClient.get_saved_items()
 
-    Parser.parse_starred_items(response.body["items"])
+    Parser.parse_saved_items(response.body["items"])
     |> decorate()
     |> write_output_to_file(destination_file_path)
   end
@@ -14,7 +14,7 @@ defmodule SlackStarredExport.Exporter do
     slack_host = hd(messages).permalink |> get_host_from_uri()
     generation_datetime = DateTime.utc_now() |> DateTime.truncate(:second)
 
-    SlackStarredExport.ExportView.list_starred_messages(messages, slack_host, generation_datetime)
+    SSIExport.ExportView.list_saved_messages(messages, slack_host, generation_datetime)
   end
 
   @doc """

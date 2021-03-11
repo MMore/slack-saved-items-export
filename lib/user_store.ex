@@ -1,5 +1,5 @@
-defmodule SlackStarredExport.UserStore do
-  alias SlackStarredExport.Data
+defmodule SSIExport.UserStore do
+  alias SSIExport.Data
 
   use GenServer
 

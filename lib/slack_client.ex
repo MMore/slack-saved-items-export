@@ -1,4 +1,4 @@
-defmodule SlackStarredExport.SlackClient do
+defmodule SSIExport.SlackClient do
   use Tesla
 
   plug(Tesla.Middleware.BaseUrl, "https://slack.com/api")
@@ -10,7 +10,7 @@ defmodule SlackStarredExport.SlackClient do
 
   plug(Tesla.Middleware.JSON)
 
-  def get_starred_items() do
+  def get_saved_items() do
     get("/stars.list")
   end
 
@@ -27,6 +27,6 @@ defmodule SlackStarredExport.SlackClient do
   end
 
   defp get_token_from_environment() do
-    System.get_env(SlackStarredExport.Application.get_token_environment_variable_name())
+    System.get_env(SSIExport.Application.get_token_environment_variable_name())
   end
 end

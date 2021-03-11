@@ -1,21 +1,21 @@
-defmodule SlackStarredExport.Parser do
-  alias SlackStarredExport.Data
-  alias SlackStarredExport.ChannelStore
-  alias SlackStarredExport.UserStore
+defmodule SSIExport.Parser do
+  alias SSIExport.Data
+  alias SSIExport.ChannelStore
+  alias SSIExport.UserStore
 
-  def parse_starred_items(items, enricher_fn \\ &enrich_starred_message/1) do
+  def parse_saved_items(items, enricher_fn \\ &enrich_saved_message/1) do
     Enum.filter(items, fn x -> x["type"] == "message" end)
     |> Enum.map(fn m ->
       Task.async(fn ->
-        parse_starred_message(m)
+        parse_saved_message(m)
         |> enricher_fn.()
       end)
     end)
     |> Enum.map(&Task.await(&1, :infinity))
   end
 
-  defp parse_starred_message(message) do
-    %Data.StarredMessage{
+  defp parse_saved_message(message) do
+    %Data.SavedMessage{
       channel_id: message["channel"],
       date_created: DateTime.from_unix!(message["date_create"]),
       message_id: message["message"]["ts"],
@@ -85,7 +85,7 @@ defmodule SlackStarredExport.Parser do
     )
   end
 
-  def enrich_starred_message(
+  def enrich_saved_message(
         message,
         channel_store \\ ChannelStore,
         user_store \\ UserStore,
@@ -97,7 +97,7 @@ defmodule SlackStarredExport.Parser do
 
     replies_task = Task.async(data_mod, :get_replies, [message.channel_id, message.message_id])
 
-    %Data.StarredMessage{
+    %Data.SavedMessage{
       message
       | channel_name: Task.await(channel_name_task, :infinity),
         user: Task.await(user_info_task, :infinity),

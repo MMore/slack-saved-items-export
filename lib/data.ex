@@ -1,7 +1,7 @@
-defmodule SlackStarredExport.Data do
-  alias SlackStarredExport.SlackClient
+defmodule SSIExport.Data do
+  alias SSIExport.SlackClient
 
-  defmodule StarredMessage do
+  defmodule SavedMessage do
     defstruct channel_id: nil,
               channel_name: nil,
               date_created: nil,

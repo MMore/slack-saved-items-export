@@ -1,12 +1,12 @@
 defmodule ExporterTest do
-  alias SlackStarredExport.Data
-  alias SlackStarredExport.Exporter
+  alias SSIExport.Data
+  alias SSIExport.Exporter
   use ExUnit.Case
-  doctest SlackStarredExport.Exporter
+  doctest SSIExport.Exporter
 
   test "decorates data structure with some nice html" do
     messages = [
-      %Data.StarredMessage{
+      %Data.SavedMessage{
         channel_id: "C1VUNGG7L",
         channel_name: "channel_name",
         date_created: 1_614_190_396,
