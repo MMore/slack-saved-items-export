@@ -6,12 +6,11 @@ defmodule SlackStarredExport.UserStore do
   # Client
 
   def start_link(_args) do
-    IO.puts("Starting user store...")
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
   def get_user_info(user_id) do
-    GenServer.call(__MODULE__, {:get_user_info, user_id})
+    GenServer.call(__MODULE__, {:get_user_info, user_id}, :infinity)
   end
 
   # Server

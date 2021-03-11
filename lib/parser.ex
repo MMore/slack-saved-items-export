@@ -6,9 +6,12 @@ defmodule SlackStarredExport.Parser do
   def parse_starred_items(items, enricher_fn \\ &enrich_starred_message/1) do
     Enum.filter(items, fn x -> x["type"] == "message" end)
     |> Enum.map(fn m ->
-      parse_starred_message(m)
-      |> enricher_fn.()
+      Task.async(fn ->
+        parse_starred_message(m)
+        |> enricher_fn.()
+      end)
     end)
+    |> Enum.map(&Task.await(&1, :infinity))
   end
 
   defp parse_starred_message(message) do
@@ -60,7 +63,7 @@ defmodule SlackStarredExport.Parser do
     |> Enum.map(fn user_id ->
       Task.async(user_store, :get_user_info, [hd(user_id)])
     end)
-    |> Enum.map(&Task.await/1)
+    |> Enum.map(&Task.await(&1, :infinity))
     |> Enum.reduce(text, fn u, acc ->
       String.replace(
         acc,
@@ -96,9 +99,9 @@ defmodule SlackStarredExport.Parser do
 
     %Data.StarredMessage{
       message
-      | channel_name: Task.await(channel_name_task),
-        user: Task.await(user_info_task),
-        replies: reply_parser_fn.(Task.await(replies_task))
+      | channel_name: Task.await(channel_name_task, :infinity),
+        user: Task.await(user_info_task, :infinity),
+        replies: reply_parser_fn.(Task.await(replies_task, :infinity))
     }
   end
 
@@ -127,11 +130,8 @@ defmodule SlackStarredExport.Parser do
   end
 
   def enrich_reply(reply, user_store \\ UserStore) do
-    user_info_task = Task.async(user_store, :get_user_info, [reply.user_id])
+    user_info = user_store.get_user_info(reply.user_id)
 
-    %Data.Reply{
-      reply
-      | user: Task.await(user_info_task)
-    }
+    %Data.Reply{reply | user: user_info}
   end
 end

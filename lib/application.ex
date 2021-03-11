@@ -1,7 +1,5 @@
 defmodule SlackStarredExport.Application do
   def start(_type, _args) do
-    IO.puts("Starting SlackStarredExport application...")
-
     children = [
       {SlackStarredExport.ChannelStore, []},
       {SlackStarredExport.UserStore, []}
