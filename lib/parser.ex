@@ -39,7 +39,7 @@ defmodule SlackStarredExport.Parser do
       ~s(<b>\\1</b>)
     )
     |> String.replace(
-      ~r/_([^<>]+)_/,
+      ~r/_([^<>=\/]+)_/,
       ~s(<i>\\1</i>)
     )
     |> String.replace(
@@ -52,7 +52,7 @@ defmodule SlackStarredExport.Parser do
     String.replace(
       text,
       ~r/<!([[:word:]]+)>/,
-      ~s(<span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@\\1</span>)
+      ~s(<span class="bg-yellow-300 bg-opacity-75 text-gray-800 font-medium">@\\1</span>)
     )
   end
 
@@ -68,7 +68,7 @@ defmodule SlackStarredExport.Parser do
       String.replace(
         acc,
         "<@#{u.user_id}>",
-        ~s(<span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@#{u.real_name}</span>)
+        ~s(<span class="bg-yellow-300 bg-opacity-75 text-gray-800 font-medium">@#{u.real_name}</span>)
       )
     end)
   end

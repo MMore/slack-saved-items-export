@@ -10,7 +10,7 @@
 
 <div class="grid grid-cols-1 m-3">
   <h1 class="text-3xl font-bold leading-7 text-gray-900 mb-5">
-    Slack Starred Messages - Export <span class="text-gray-300 text-xs font-light"><a href="https://<%= slack_host %>" target="_blank" class="hover:underline"><%= slack_host %></a> @ <%= generation_datetime %></span>
+    Slack Starred Messages (<%= length(messages) %>) <span class="text-gray-400 text-xs font-light"><a href="https://<%= slack_host %>" target="_blank" class="hover:underline"><%= slack_host %></a> @ <%= generation_datetime %></span>
   </h1>
 
   <div class="flex flex-col space-y-2">

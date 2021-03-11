@@ -62,24 +62,30 @@ defmodule ParserTest do
       assert Parser.parse_message_text("Hey _, how? are_you?!._", TestStore) ==
                ~s(Hey <i>, how? are_you?!.</i>)
 
+      assert Parser.parse_message_text(
+               "<https://www.gesetze-im-internet.de/bdsg_2018/__58.html>",
+               TestStore
+             ) ==
+               ~s(<a href=\"https://www.gesetze-im-internet.de/bdsg_2018/__58.html\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://www.gesetze-im-internet.de/bdsg_2018/__58.html</a>)
+
       assert Parser.parse_message_text("Hey ~, how? are_you?!.~", TestStore) ==
                ~s(Hey <span class="line-through">, how? are_you?!.</span>)
     end
 
     test "for general mentions" do
       assert Parser.parse_message_text("Hey <!channel>!", TestStore) ==
-               ~s(Hey <span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@channel</span>!)
+               ~s(Hey <span class="bg-yellow-300 bg-opacity-75 text-gray-800 font-medium">@channel</span>!)
 
       assert Parser.parse_message_text("Hey <!here>!", TestStore) ==
-               ~s(Hey <span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@here</span>!)
+               ~s(Hey <span class="bg-yellow-300 bg-opacity-75 text-gray-800 font-medium">@here</span>!)
 
       assert Parser.parse_message_text("Hey <!something_else>!", TestStore) ==
-               ~s(Hey <span class="bg-yellow-600 bg-opacity-75 text-yellow-200">@something_else</span>!)
+               ~s(Hey <span class="bg-yellow-300 bg-opacity-75 text-gray-800 font-medium">@something_else</span>!)
     end
 
     test "for user mentions" do
       assert Parser.parse_message_text("Hey <@U8S7YRMK2>!", TestStore) ==
-               ~s(Hey <span class=\"bg-yellow-600 bg-opacity-75 text-yellow-200\">@real_name_U8S7YRMK2</span>!)
+               ~s(Hey <span class=\"bg-yellow-300 bg-opacity-75 text-gray-800 font-medium\">@real_name_U8S7YRMK2</span>!)
     end
 
     test "for URLs" do
@@ -134,7 +140,7 @@ defmodule ParserTest do
                date_created: ~U[2021-02-19 20:20:54Z],
                message_id: "1613766054.045300",
                text:
-                 "<span class=\"bg-yellow-600 bg-opacity-75 text-yellow-200\">@real_name_U8S7YRMK2</span> Looks interesting, thanks for the recommendation!",
+                 "<span class=\"bg-yellow-300 bg-opacity-75 text-gray-800 font-medium\">@real_name_U8S7YRMK2</span> Looks interesting, thanks for the recommendation!",
                user_id: "UH9T09HMW"
              },
              %Data.Reply{
