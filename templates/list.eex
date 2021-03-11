@@ -4,6 +4,7 @@
   <title>Slack Saved Messages - Export <%= slack_host %></title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content="https://github.com/MMore/slack-saved-items-export">
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
