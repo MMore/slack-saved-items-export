@@ -39,10 +39,6 @@ defmodule SSIExport.Parser do
       ~s(<b>\\1</b>)
     )
     |> String.replace(
-      ~r/_([^<>=\/]+)_/,
-      ~s(<i>\\1</i>)
-    )
-    |> String.replace(
       ~r/~([^<>]+)~/,
       ~s(<span class="line-through">\\1</span>)
     )

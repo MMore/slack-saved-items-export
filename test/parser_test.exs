@@ -59,15 +59,6 @@ defmodule ParserTest do
       assert Parser.parse_message_text("Hey *, how? are_you?!.*", TestStore) ==
                ~s(Hey <b>, how? are_you?!.</b>)
 
-      assert Parser.parse_message_text("Hey _, how? are_you?!._", TestStore) ==
-               ~s(Hey <i>, how? are_you?!.</i>)
-
-      assert Parser.parse_message_text(
-               "<https://www.gesetze-im-internet.de/bdsg_2018/__58.html>",
-               TestStore
-             ) ==
-               ~s(<a href=\"https://www.gesetze-im-internet.de/bdsg_2018/__58.html\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://www.gesetze-im-internet.de/bdsg_2018/__58.html</a>)
-
       assert Parser.parse_message_text("Hey ~, how? are_you?!.~", TestStore) ==
                ~s(Hey <span class="line-through">, how? are_you?!.</span>)
     end
@@ -100,6 +91,18 @@ defmodule ParserTest do
                TestStore
              ) ==
                ~s(A text with <a href="http://example.org" target="_blank" class="hover:underline text-gray-500">Example text_block 2-1</a> url and <a href="http://example.org/?a=1" target="_blank" class="hover:underline text-gray-500">http://example.org/?a=1</a> url)
+
+      assert Parser.parse_message_text(
+               "<https://example.de/bd_18/__58.html>",
+               TestStore
+             ) ==
+               ~s(<a href=\"https://example.de/bd_18/__58.html\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://example.de/bd_18/__58.html</a>)
+
+      assert Parser.parse_message_text(
+               "<https://example.de/fad/us_upl/pdf/pm/20/17-PM-Nach_ScII_D_Eigt.pdf|https://example.de/fad/us_upl/pdf/pm/20/17-PM-Nach_ScII_D_Eigt.pdf>",
+               TestStore
+             ) ==
+               ~s(<a href=\"https://example.de/fad/us_upl/pdf/pm/20/17-PM-Nach_ScII_D_Eigt.pdf\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://example.de/fad/us_upl/pdf/pm/20/17-PM-Nach_ScII_D_Eigt.pdf</a>)
     end
   end
 
