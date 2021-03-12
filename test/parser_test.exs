@@ -56,11 +56,14 @@ defmodule ParserTest do
 
   describe "parses message text" do
     test "for basic formatting" do
-      assert Parser.parse_message_text("Hey *, how? are_you?!.*", TestStore) ==
-               ~s(Hey <b>, how? are_you?!.</b>)
+      assert Parser.parse_message_text("Hey *, how? are_you?!.* and *test*", TestStore) ==
+               ~s(Hey <b>, how? are_you?!.</b> and <b>test</b>)
 
-      assert Parser.parse_message_text("Hey ~, how? are_you?!.~", TestStore) ==
-               ~s(Hey <span class="line-through">, how? are_you?!.</span>)
+      assert Parser.parse_message_text("Hey ~, how? are_you?!.~ and ~test~", TestStore) ==
+               ~s(Hey <span class="line-through">, how? are_you?!.</span> and <span class="line-through">test</span>)
+
+      assert Parser.parse_message_text("Hey `, how? are_you?!.` and `code`", TestStore) ==
+               ~s(Hey <span class="bg-gray-200 bg-opacity-75 border-gray-400 border rounded p-0.5 text-pink-500">, how? are_you?!.</span> and <span class="bg-gray-200 bg-opacity-75 border-gray-400 border rounded p-0.5 text-pink-500">code</span>)
 
       assert Parser.parse_message_text("Channel <#C1VUNGG7L|ch_an-test>!", TestStore) ==
                ~s(Channel <span class="bg-blue-200 bg-opacity-75 text-blue-400">#ch_an-test</span>!)

@@ -35,12 +35,16 @@ defmodule SSIExport.Parser do
   defp parse_basic_formatting(text) do
     String.replace(
       text,
-      ~r/\*([^<>]+)\*/,
+      ~r/\*([^<>\*]+)\*/,
       ~s(<b>\\1</b>)
     )
     |> String.replace(
-      ~r/~([^<>]+)~/,
+      ~r/~([^<>~]+)~/,
       ~s(<span class="line-through">\\1</span>)
+    )
+    |> String.replace(
+      ~r/`([^<>`]+)`/,
+      ~s(<span class="bg-gray-200 bg-opacity-75 border-gray-400 border rounded p-0.5 text-pink-500">\\1</span>)
     )
     |> String.replace(
       ~r/<#[[:word:]]+\|([[:word:]-]+)>/,
