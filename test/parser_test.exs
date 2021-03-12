@@ -61,6 +61,9 @@ defmodule ParserTest do
 
       assert Parser.parse_message_text("Hey ~, how? are_you?!.~", TestStore) ==
                ~s(Hey <span class="line-through">, how? are_you?!.</span>)
+
+      assert Parser.parse_message_text("Channel <#C1VUNGG7L|ch_an-test>!", TestStore) ==
+               ~s(Channel <span class="bg-blue-200 bg-opacity-75 text-blue-400">#ch_an-test</span>!)
     end
 
     test "for general mentions" do

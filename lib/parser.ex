@@ -42,6 +42,10 @@ defmodule SSIExport.Parser do
       ~r/~([^<>]+)~/,
       ~s(<span class="line-through">\\1</span>)
     )
+    |> String.replace(
+      ~r/<#[[:word:]]+\|([[:word:]-]+)>/,
+      ~s(<span class="bg-blue-200 bg-opacity-75 text-blue-400">#\\1</span>)
+    )
   end
 
   defp parse_general_mentions(text) do
