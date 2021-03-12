@@ -47,7 +47,7 @@ defmodule ParserTest do
                permalink: "https://example.slack.com/archives/C0LV45YRJ/p1613748935045000",
                replies: [],
                text:
-                 "FYI recommending <a href=\"https://retrotool.io\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://retrotool.io</a>\n not very known but free and to the point. Our scrum masters use them to great effect.",
+                 "FYI recommending <a href=\"https://retrotool.io\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://retrotool.io</a><br /> not very known but free and to the point. Our scrum masters use them to great effect.",
                user_id: "U8S7YRMK2",
                user: nil
              }
@@ -64,6 +64,12 @@ defmodule ParserTest do
 
       assert Parser.parse_message_text("Channel <#C1VUNGG7L|ch_an-test>!", TestStore) ==
                ~s(Channel <span class="bg-blue-200 bg-opacity-75 text-blue-400">#ch_an-test</span>!)
+
+      assert Parser.parse_message_text(
+               "Hey guys!\nHow are you?\n\nAll the best\n&amp; have a great weekend!\n\nMickey",
+               TestStore
+             ) ==
+               ~s(Hey guys!<br />How are you?<br /><br />All the best<br />&amp; have a great weekend!<br /><br />Mickey)
     end
 
     test "for general mentions" do
