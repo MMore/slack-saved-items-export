@@ -1,6 +1,7 @@
 defmodule CLITest do
   alias SSIExport.Application
   alias SSIExport.CLI
+  alias SSIExport.Exporter
   use ExUnit.Case
 
   import ExUnit.CaptureIO
@@ -9,7 +10,9 @@ defmodule CLITest do
     assert capture_io(fn -> CLI.main([]) end) == capture_io(fn -> CLI.print_help() end)
     assert capture_io(fn -> CLI.main(["--help"]) end) == capture_io(fn -> CLI.print_help() end)
     assert capture_io(fn -> CLI.main(["wtf"]) end) == capture_io(fn -> CLI.print_help() end)
-    assert capture_io(fn -> CLI.main(["--output"]) end) == capture_io(fn -> CLI.print_help() end)
+
+    assert capture_io(fn -> CLI.main(["--show-profile-image"]) end) ==
+             capture_io(fn -> CLI.print_help() end)
   end
 
   describe "environment variable is NOT set" do
@@ -26,18 +29,42 @@ defmodule CLITest do
   end
 
   describe "environment variable IS set" do
-    test "runs the exporter with the given destination file path" do
+    setup context do
       System.put_env(Application.get_token_environment_variable_name(), "123")
+      :ok
+    end
 
+    test "runs the exporter with the given destination file path and no profile image by default" do
       output_file = "export.html"
       destination_path = Path.expand(output_file)
 
       assert capture_io(fn ->
-               CLI.main(["--output", output_file], fn x -> send(self(), {:output, x}) end)
+               CLI.main(["--output", output_file], fn x -> send(self(), {:options, x}) end)
              end) ==
                ~s(Exporting to "#{destination_path}"...\n...done.\n)
 
-      assert_received {:output, ^output_file}
+      assert_received {:options,
+                       %Exporter.Options{
+                         destination_file_path: output_file,
+                         show_profile_image?: false
+                       }}
+    end
+
+    test "runs the exporter with the show-profile-image option" do
+      output_file = "export.html"
+      destination_path = Path.expand(output_file)
+
+      capture_io(fn ->
+        CLI.main(["--output", output_file, "--show-profile-image"], fn x ->
+          send(self(), {:options, x})
+        end)
+      end)
+
+      assert_received {:options,
+                       %Exporter.Options{
+                         destination_file_path: output_file,
+                         show_profile_image?: true
+                       }}
     end
   end
 end

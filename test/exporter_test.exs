@@ -40,5 +40,7 @@ defmodule ExporterTest do
     assert Exporter.decorate(messages) =~ ~r(Mickey Mouse)
     assert Exporter.decorate(messages) =~ ~r(example.slack.com)
     assert Exporter.decorate(messages) =~ ~r(message with replies)
+
+    assert Exporter.decorate(messages, true) =~ ~r(img src="image24")
   end
 end

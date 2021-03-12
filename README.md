@@ -35,7 +35,7 @@ After installation you get a [user token](https://api.slack.com/authentication/t
 ```
 export SLACK_SAVED_ITEMS_EXPORT_OAUTH_TOKEN=xoxp-YOUR-TOKEN
 slack-saved-items-export --help
-slack-saved-items-export --output export.html
+slack-saved-items-export --output export.html --show-profile-image
 ```
 
 ## Example output

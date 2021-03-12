@@ -6,10 +6,12 @@ defmodule SSIExport.ExportView do
   EEx.function_from_file(:def, :list_saved_messages, Path.join(@template_path, "list.eex"), [
     :messages,
     :slack_host,
-    :generation_datetime
+    :generation_datetime,
+    :show_profile_image?
   ])
 
   EEx.function_from_file(:def, :show_reply, Path.join(@template_path, "reply.eex"), [
-    :reply
+    :reply,
+    :show_profile_image?
   ])
 end

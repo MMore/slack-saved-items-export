@@ -2,19 +2,28 @@ defmodule SSIExport.Exporter do
   alias SSIExport.SlackClient
   alias SSIExport.Parser
 
-  def export(destination_file_path) do
+  defmodule Options do
+    defstruct destination_file_path: nil, show_profile_image?: false
+  end
+
+  def export(%Options{} = options) do
     {:ok, response} = SlackClient.get_saved_items()
 
     Parser.parse_saved_items(response.body["items"])
-    |> decorate()
-    |> write_output_to_file(destination_file_path)
+    |> decorate(options.show_profile_image?)
+    |> write_output_to_file(options.destination_file_path)
   end
 
-  def decorate(messages) do
+  def decorate(messages, show_profile_image? \\ false) do
     slack_host = hd(messages).permalink |> get_host_from_uri()
     generation_datetime = DateTime.utc_now() |> DateTime.truncate(:second)
 
-    SSIExport.ExportView.list_saved_messages(messages, slack_host, generation_datetime)
+    SSIExport.ExportView.list_saved_messages(
+      messages,
+      slack_host,
+      generation_datetime,
+      show_profile_image?
+    )
   end
 
   @doc """
