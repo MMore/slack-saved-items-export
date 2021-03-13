@@ -29,7 +29,7 @@ defmodule CLITest do
   end
 
   describe "environment variable IS set" do
-    setup context do
+    setup _context do
       System.put_env(Application.get_token_environment_variable_name(), "123")
       :ok
     end
@@ -45,14 +45,13 @@ defmodule CLITest do
 
       assert_received {:options,
                        %Exporter.Options{
-                         destination_file_path: output_file,
+                         destination_file_path: ^output_file,
                          show_profile_image?: false
                        }}
     end
 
     test "runs the exporter with the show-profile-image option" do
       output_file = "export.html"
-      destination_path = Path.expand(output_file)
 
       capture_io(fn ->
         CLI.main(["--output", output_file, "--show-profile-image"], fn x ->
@@ -62,7 +61,7 @@ defmodule CLITest do
 
       assert_received {:options,
                        %Exporter.Options{
-                         destination_file_path: output_file,
+                         destination_file_path: ^output_file,
                          show_profile_image?: true
                        }}
     end

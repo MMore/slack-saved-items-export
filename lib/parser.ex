@@ -116,7 +116,7 @@ defmodule SSIExport.Parser do
   def parse_replies(replies, enricher_fn \\ &enrich_reply/1, user_store \\ UserStore) do
     # don't show parent message again
     Enum.filter(replies, fn x ->
-      x["ts"] != x["thread_ts"]
+      x["thread_ts"] != nil and x["ts"] != x["thread_ts"]
     end)
     |> Enum.map(fn x ->
       parse_reply(x, user_store)

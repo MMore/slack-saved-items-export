@@ -118,7 +118,7 @@ defmodule ParserTest do
     end
   end
 
-  test "enriches message with channel name and user name" do
+  test "enriches message with channel name and user info" do
     message = %Data.SavedMessage{
       channel_id: "C1VUNGG7L",
       date_created: 1_614_190_396,
@@ -145,27 +145,39 @@ defmodule ParserTest do
              }
   end
 
-  test "filters and parses replies to a defined data structure" do
-    replies =
-      File.read!(Path.join([__DIR__, "fixtures", "response_conversations.replies.json"]))
-      |> Jason.decode!()
+  describe "replies" do
+    test "filters and parses them to a defined data structure" do
+      replies =
+        File.read!(Path.join([__DIR__, "fixtures", "response_conversations.replies.json"]))
+        |> Jason.decode!()
 
-    assert Parser.parse_replies(replies["messages"], fn x -> x end, TestStore) == [
-             %Data.Reply{
-               date_created: ~U[2021-02-19 20:20:54Z],
-               message_id: "1613766054.045300",
-               text:
-                 "<span class=\"bg-yellow-300 bg-opacity-75 text-gray-800 font-medium\">@real_name_U8S7YRMK2</span> Looks interesting, thanks for the recommendation!",
-               user_id: "UH9T09HMW"
-             },
-             %Data.Reply{
-               date_created: ~U[2021-02-22 09:43:29Z],
-               message_id: "1613987009.008700",
-               text:
-                 "Can also highly recommend <a href=\"https://metroretro.io/\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://metroretro.io/</a>",
-               user_id: "U2WQE893K"
-             }
-           ]
+      assert Parser.parse_replies(replies["messages"], fn x -> x end, TestStore) == [
+               %Data.Reply{
+                 date_created: ~U[2021-02-19 20:20:54Z],
+                 message_id: "1613766054.045300",
+                 text:
+                   "<span class=\"bg-yellow-300 bg-opacity-75 text-gray-800 font-medium\">@real_name_U8S7YRMK2</span> Looks interesting, thanks for the recommendation!",
+                 user_id: "UH9T09HMW"
+               },
+               %Data.Reply{
+                 date_created: ~U[2021-02-22 09:43:29Z],
+                 message_id: "1613987009.008700",
+                 text:
+                   "Can also highly recommend <a href=\"https://metroretro.io/\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://metroretro.io/</a>",
+                 user_id: "U2WQE893K"
+               }
+             ]
+    end
+
+    test "filters them out if it's not a thread" do
+      replies =
+        File.read!(
+          Path.join([__DIR__, "fixtures", "response_conversations.replies_no_thread.json"])
+        )
+        |> Jason.decode!()
+
+      assert Parser.parse_replies(replies["messages"], fn x -> x end, TestStore) == []
+    end
   end
 
   test "enriches reply with user name" do

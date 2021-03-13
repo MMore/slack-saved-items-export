@@ -1,0 +1,43 @@
+{
+    "ok": true,
+    "messages": [
+        {
+            "client_msg_id": "329f6889-c975-4212-9eb4-0efa5a7e5414",
+            "type": "message",
+            "text": "Test with `code`",
+            "user": "U0ND3MJ6A",
+            "ts": "1615500138.000300",
+            "team": "T0LV9U9NK",
+            "edited": {
+                "user": "U0ND3MJ6A",
+                "ts": "1615544175.000000"
+            },
+            "blocks": [
+                {
+                    "type": "rich_text",
+                    "block_id": "uJiZa",
+                    "elements": [
+                        {
+                            "type": "rich_text_section",
+                            "elements": [
+                                {
+                                    "type": "text",
+                                    "text": "Test with "
+                                },
+                                {
+                                    "type": "text",
+                                    "text": "code",
+                                    "style": {
+                                        "code": true
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "is_starred": true
+        }
+    ],
+    "has_more": false
+}
