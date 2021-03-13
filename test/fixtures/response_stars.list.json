@@ -6,6 +6,24 @@
         },
         {
             "type": "message",
+            "channel": "G2YTXSK1S",
+            "message": {
+                "type": "message",
+                "subtype": "bot_message",
+                "text": "New sign up request",
+                "ts": "1614965497.000400",
+                "username": "Typeform",
+                "icons": {
+                    "emoji": ":squirrel:"
+                },
+                "bot_id": "B2YTZ4Z1A",
+                "is_starred": true,
+                "permalink": "https://example.slack.com/archives/G2YTXSK1S/p1614965497000400"
+            },
+            "date_create": 1615632590
+        },
+        {
+            "type": "message",
             "channel": "C1VUNGG7L",
             "message": {
                 "client_msg_id": "f38dd4b7-905b-43c7-989d-c41fa8cda534",

@@ -15,7 +15,7 @@ defmodule SSIExport.Parser do
   end
 
   defp parse_saved_message(message) do
-    %Data.SavedMessage{
+    saved_message = %Data.SavedMessage{
       channel_id: message["channel"],
       date_created: DateTime.from_unix!(message["date_create"]),
       message_id: message["message"]["ts"],
@@ -23,6 +23,14 @@ defmodule SSIExport.Parser do
       text: parse_message_text(message["message"]["text"]),
       user_id: message["message"]["user"]
     }
+
+    # bot user?
+    if saved_message.user_id == nil do
+      user = %Data.User{real_name: message["message"]["username"]}
+      %Data.SavedMessage{saved_message | user: user}
+    else
+      saved_message
+    end
   end
 
   def parse_message_text(text, user_store \\ UserStore) do
@@ -101,19 +109,30 @@ defmodule SSIExport.Parser do
         reply_parser_fn \\ &parse_replies/1
       ) do
     channel_name_task = Task.async(channel_store, :get_channel_name, [message.channel_id])
-    user_info_task = Task.async(user_store, :get_user_info, [message.user_id])
+
+    user_info_task =
+      if message.user == nil do
+        Task.async(user_store, :get_user_info, [message.user_id])
+      else
+        nil
+      end
 
     replies_task = Task.async(data_mod, :get_replies, [message.channel_id, message.message_id])
 
     channel_info = Task.await(channel_name_task, :infinity)
 
-    %Data.SavedMessage{
+    saved_message = %Data.SavedMessage{
       message
       | channel_name: elem(channel_info, 1),
         channel_type: elem(channel_info, 0),
-        user: Task.await(user_info_task, :infinity),
         replies: reply_parser_fn.(Task.await(replies_task, :infinity))
     }
+
+    if user_info_task != nil do
+      %Data.SavedMessage{saved_message | user: Task.await(user_info_task, :infinity)}
+    else
+      saved_message
+    end
   end
 
   def parse_replies(replies, enricher_fn \\ &enrich_reply/1, user_store \\ UserStore) do

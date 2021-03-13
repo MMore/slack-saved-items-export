@@ -23,11 +23,26 @@ defmodule ParserTest do
   end
 
   test "filters for messages and parses saved items to a defined data structure" do
-    messages =
-      File.read!(Path.join([__DIR__, "fixtures", "response_stars.list.json"]))
-      |> Jason.decode!()
+    messages = Support.TestHelper.parsed_json_for_endpoint("stars.list")
 
     assert Parser.parse_saved_items(messages["items"], fn x -> x end) == [
+             %Data.SavedMessage{
+               channel_id: "G2YTXSK1S",
+               channel_name: nil,
+               channel_type: nil,
+               date_created: ~U[2021-03-13 10:49:50Z],
+               message_id: "1614965497.000400",
+               permalink: "https://example.slack.com/archives/G2YTXSK1S/p1614965497000400",
+               replies: [],
+               text: "New sign up request",
+               user: %Data.User{
+                 image_24: nil,
+                 real_name: "Typeform",
+                 title: nil,
+                 user_id: nil
+               },
+               user_id: nil
+             },
              %Data.SavedMessage{
                channel_id: "C1VUNGG7L",
                channel_name: nil,
@@ -118,32 +133,65 @@ defmodule ParserTest do
     end
   end
 
-  test "enriches message with channel name and user info" do
-    message = %Data.SavedMessage{
-      channel_id: "C1VUNGG7L",
-      date_created: 1_614_190_396,
-      message_id: "1614163736.005600",
-      text: "A message without replies :smile:",
-      user_id: "U8S7YRMK2"
-    }
+  describe "enriching message" do
+    test "user message with channel name, replies and user info" do
+      message = %Data.SavedMessage{
+        channel_id: "C1VUNGG7L",
+        date_created: 1_614_190_396,
+        message_id: "1614163736.005600",
+        text: "A message without replies :smile:",
+        user_id: "U8S7YRMK2"
+      }
 
-    assert Parser.enrich_saved_message(message, TestStore, TestStore, TestStore, fn x -> x end) ==
-             %Data.SavedMessage{
-               channel_id: "C1VUNGG7L",
-               channel_name: "channel_name_C1VUNGG7L",
-               channel_type: :public,
-               date_created: 1_614_190_396,
-               message_id: "1614163736.005600",
-               replies: "replies_C1VUNGG7L_1614163736.005600",
-               text: "A message without replies :smile:",
-               user_id: "U8S7YRMK2",
-               user: %Data.User{
+      assert Parser.enrich_saved_message(message, TestStore, TestStore, TestStore, fn x -> x end) ==
+               %Data.SavedMessage{
+                 channel_id: "C1VUNGG7L",
+                 channel_name: "channel_name_C1VUNGG7L",
+                 channel_type: :public,
+                 date_created: 1_614_190_396,
+                 message_id: "1614163736.005600",
+                 replies: "replies_C1VUNGG7L_1614163736.005600",
+                 text: "A message without replies :smile:",
                  user_id: "U8S7YRMK2",
-                 real_name: "real_name_U8S7YRMK2",
-                 title: "Mouse",
-                 image_24: "image24"
+                 user: %Data.User{
+                   user_id: "U8S7YRMK2",
+                   real_name: "real_name_U8S7YRMK2",
+                   title: "Mouse",
+                   image_24: "image24"
+                 }
                }
-             }
+    end
+
+    test "bot message with channel name and replies" do
+      message = %Data.SavedMessage{
+        channel_id: "C1VUNGG7L",
+        date_created: 1_614_190_396,
+        message_id: "1614163736.005600",
+        text: "A message without replies :smile:",
+        user_id: nil,
+        user: %Data.User{
+          real_name: "Bot User"
+        }
+      }
+
+      assert Parser.enrich_saved_message(message, TestStore, TestStore, TestStore, fn x -> x end) ==
+               %Data.SavedMessage{
+                 channel_id: "C1VUNGG7L",
+                 channel_name: "channel_name_C1VUNGG7L",
+                 channel_type: :public,
+                 date_created: 1_614_190_396,
+                 message_id: "1614163736.005600",
+                 replies: "replies_C1VUNGG7L_1614163736.005600",
+                 text: "A message without replies :smile:",
+                 user_id: nil,
+                 user: %Data.User{
+                   user_id: nil,
+                   real_name: "Bot User",
+                   title: nil,
+                   image_24: nil
+                 }
+               }
+    end
   end
 
   describe "replies" do

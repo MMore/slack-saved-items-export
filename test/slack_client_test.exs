@@ -37,7 +37,7 @@ defmodule SlackClientTest do
   test "get saved items" do
     assert {:ok, %Tesla.Env{} = env} = SSIExport.SlackClient.get_saved_items()
     assert env.status == 200
-    assert Enum.count(env.body["items"]) == 3
+    assert Enum.count(env.body["items"]) == 4
   end
 
   test "get replies for message" do
