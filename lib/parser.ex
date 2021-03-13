@@ -1,6 +1,6 @@
 defmodule SSIExport.Parser do
-  alias SSIExport.Data
   alias SSIExport.ChannelStore
+  alias SSIExport.Data
   alias SSIExport.UserStore
 
   def parse_saved_items(items, enricher_fn \\ &enrich_saved_message/1) do
@@ -92,7 +92,7 @@ defmodule SSIExport.Parser do
   defp parse_url(text) do
     String.replace(
       text,
-      ~r"<(https?://[^\|>]+)\|([^>]+)>",
+      ~r"<((?:mailto:|https?:\/\/)[^\|>]+)\|([^>]+)>",
       ~s(<a href="\\1" target="_blank" class="hover:underline text-gray-500">\\2</a>)
     )
     |> String.replace(

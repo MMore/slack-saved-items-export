@@ -131,6 +131,14 @@ defmodule ParserTest do
              ) ==
                ~s(<a href=\"https://example.de/fad/us_upl/pdf/pm/20/17-PM-Nach_ScII_D_Eigt.pdf\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://example.de/fad/us_upl/pdf/pm/20/17-PM-Nach_ScII_D_Eigt.pdf</a>)
     end
+
+    test "for emails" do
+      assert Parser.parse_message_text(
+               "A text with <mailto:test@example.com|test@example.com> email <mailto:t@example.com|t@example.com>",
+               TestStore
+             ) ==
+               ~s(A text with <a href="mailto:test@example.com" target="_blank" class="hover:underline text-gray-500">test@example.com</a> email <a href="mailto:t@example.com" target="_blank" class="hover:underline text-gray-500">t@example.com</a>)
+    end
   end
 
   describe "enriching message" do
