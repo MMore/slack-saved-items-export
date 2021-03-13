@@ -21,12 +21,12 @@ defmodule SSIExport.Parser do
       message_id: message["message"]["ts"],
       permalink: message["message"]["permalink"],
       text: parse_message_text(message["message"]["text"]),
-      user_id: message["message"]["user"]
+      user: %Data.User{user_id: message["message"]["user"]}
     }
 
     # bot user?
-    if saved_message.user_id == nil do
-      user = %Data.User{real_name: message["message"]["username"]}
+    if saved_message.user.user_id == nil do
+      user = %Data.User{saved_message.user | real_name: message["message"]["username"]}
       %Data.SavedMessage{saved_message | user: user}
     else
       saved_message
@@ -102,7 +102,7 @@ defmodule SSIExport.Parser do
   end
 
   def enrich_saved_message(
-        message,
+        %Data.SavedMessage{} = message,
         channel_store \\ ChannelStore,
         user_store \\ UserStore,
         data_mod \\ Data,
@@ -111,8 +111,8 @@ defmodule SSIExport.Parser do
     channel_name_task = Task.async(channel_store, :get_channel_name, [message.channel_id])
 
     user_info_task =
-      if message.user == nil do
-        Task.async(user_store, :get_user_info, [message.user_id])
+      if message.user.real_name == nil do
+        Task.async(user_store, :get_user_info, [message.user.user_id])
       else
         nil
       end
@@ -151,7 +151,7 @@ defmodule SSIExport.Parser do
       date_created: convert_slack_timestamp_to_datetime(reply["ts"]),
       message_id: reply["ts"],
       text: parse_message_text(reply["text"], user_store),
-      user_id: reply["user"]
+      user: %Data.User{user_id: reply["user"]}
     }
   end
 
@@ -159,8 +159,8 @@ defmodule SSIExport.Parser do
     String.split(timestamp, ".") |> hd() |> String.to_integer() |> DateTime.from_unix!()
   end
 
-  def enrich_reply(reply, user_store \\ UserStore) do
-    user_info = user_store.get_user_info(reply.user_id)
+  def enrich_reply(%Data.Reply{} = reply, user_store \\ UserStore) do
+    user_info = user_store.get_user_info(reply.user.user_id)
 
     %Data.Reply{reply | user: user_info}
   end

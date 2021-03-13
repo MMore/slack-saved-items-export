@@ -16,7 +16,6 @@ defmodule ExporterTest do
           %Data.Reply{
             message_id: "1613766054.045300",
             text: "Looks interesting",
-            user_id: "UH9T09HMW",
             user: %Data.User{
               user_id: "UH9T09HMW",
               real_name: "Donald Duck",
@@ -26,7 +25,6 @@ defmodule ExporterTest do
           }
         ],
         text: "A message with replies :smile:",
-        user_id: "U8S7YRMK2",
         user: %Data.User{
           user_id: "U8S7YRMK2",
           real_name: "Mickey Mouse",

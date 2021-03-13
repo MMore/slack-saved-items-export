@@ -10,7 +10,6 @@ defmodule SSIExport.Data do
               message_id: nil,
               permalink: nil,
               text: nil,
-              user_id: nil,
               user: nil,
               replies: []
   end
@@ -19,7 +18,6 @@ defmodule SSIExport.Data do
     defstruct date_created: nil,
               message_id: nil,
               text: nil,
-              user_id: nil,
               user: nil
   end
 

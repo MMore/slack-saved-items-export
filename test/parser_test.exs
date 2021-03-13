@@ -1,6 +1,7 @@
 defmodule ParserTest do
   alias SSIExport.Data
   alias SSIExport.Parser
+  alias Support.TestHelper
   use ExUnit.Case
 
   defmodule TestStore do
@@ -40,8 +41,7 @@ defmodule ParserTest do
                  real_name: "Typeform",
                  title: nil,
                  user_id: nil
-               },
-               user_id: nil
+               }
              },
              %Data.SavedMessage{
                channel_id: "C1VUNGG7L",
@@ -51,8 +51,7 @@ defmodule ParserTest do
                permalink: "https://example.slack.com/archives/C1VUNGG7L/p1614163736005600",
                replies: [],
                text: "A message without replies :smile:",
-               user_id: "U8S7YRMK2",
-               user: nil
+               user: %Data.User{user_id: "U8S7YRMK2"}
              },
              %Data.SavedMessage{
                channel_id: "C0LV45YRJ",
@@ -63,8 +62,7 @@ defmodule ParserTest do
                replies: [],
                text:
                  "FYI recommending <a href=\"https://retrotool.io\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://retrotool.io</a><br /> not very known but free and to the point. Our scrum masters use them to great effect.",
-               user_id: "U8S7YRMK2",
-               user: nil
+               user: %Data.User{user_id: "U8S7YRMK2"}
              }
            ]
   end
@@ -148,7 +146,7 @@ defmodule ParserTest do
         date_created: 1_614_190_396,
         message_id: "1614163736.005600",
         text: "A message without replies :smile:",
-        user_id: "U8S7YRMK2"
+        user: %Data.User{user_id: "U8S7YRMK2"}
       }
 
       assert Parser.enrich_saved_message(message, TestStore, TestStore, TestStore, fn x -> x end) ==
@@ -160,7 +158,6 @@ defmodule ParserTest do
                  message_id: "1614163736.005600",
                  replies: "replies_C1VUNGG7L_1614163736.005600",
                  text: "A message without replies :smile:",
-                 user_id: "U8S7YRMK2",
                  user: %Data.User{
                    user_id: "U8S7YRMK2",
                    real_name: "real_name_U8S7YRMK2",
@@ -176,8 +173,8 @@ defmodule ParserTest do
         date_created: 1_614_190_396,
         message_id: "1614163736.005600",
         text: "A message without replies :smile:",
-        user_id: nil,
         user: %Data.User{
+          user_id: nil,
           real_name: "Bot User"
         }
       }
@@ -191,7 +188,6 @@ defmodule ParserTest do
                  message_id: "1614163736.005600",
                  replies: "replies_C1VUNGG7L_1614163736.005600",
                  text: "A message without replies :smile:",
-                 user_id: nil,
                  user: %Data.User{
                    user_id: nil,
                    real_name: "Bot User",
@@ -204,9 +200,7 @@ defmodule ParserTest do
 
   describe "replies" do
     test "filters and parses them to a defined data structure" do
-      replies =
-        File.read!(Path.join([__DIR__, "fixtures", "response_conversations.replies.json"]))
-        |> Jason.decode!()
+      replies = TestHelper.parsed_json_for_endpoint("conversations.replies")
 
       assert Parser.parse_replies(replies["messages"], fn x -> x end, TestStore) == [
                %Data.Reply{
@@ -214,24 +208,20 @@ defmodule ParserTest do
                  message_id: "1613766054.045300",
                  text:
                    "<span class=\"bg-yellow-300 bg-opacity-75 text-gray-800 font-medium\">@real_name_U8S7YRMK2</span> Looks interesting, thanks for the recommendation!",
-                 user_id: "UH9T09HMW"
+                 user: %Data.User{image_24: nil, real_name: nil, title: nil, user_id: "UH9T09HMW"}
                },
                %Data.Reply{
                  date_created: ~U[2021-02-22 09:43:29Z],
                  message_id: "1613987009.008700",
                  text:
                    "Can also highly recommend <a href=\"https://metroretro.io/\" target=\"_blank\" class=\"hover:underline text-gray-500\">https://metroretro.io/</a>",
-                 user_id: "U2WQE893K"
+                 user: %Data.User{image_24: nil, real_name: nil, title: nil, user_id: "U2WQE893K"}
                }
              ]
     end
 
     test "filters them out if it's not a thread" do
-      replies =
-        File.read!(
-          Path.join([__DIR__, "fixtures", "response_conversations.replies_no_thread.json"])
-        )
-        |> Jason.decode!()
+      replies = TestHelper.parsed_json_for_endpoint("conversations.replies_no_thread")
 
       assert Parser.parse_replies(replies["messages"], fn x -> x end, TestStore) == []
     end
@@ -241,14 +231,13 @@ defmodule ParserTest do
     reply = %Data.Reply{
       message_id: "1613766054.045300",
       text: "<@U8S7YRMK2> Looks interesting, thanks for the recommendation!",
-      user_id: "UH9T09HMW"
+      user: %Data.User{user_id: "UH9T09HMW"}
     }
 
     assert Parser.enrich_reply(reply, TestStore) ==
              %Data.Reply{
                message_id: "1613766054.045300",
                text: "<@U8S7YRMK2> Looks interesting, thanks for the recommendation!",
-               user_id: "UH9T09HMW",
                user: %Data.User{
                  user_id: "UH9T09HMW",
                  real_name: "real_name_UH9T09HMW",
