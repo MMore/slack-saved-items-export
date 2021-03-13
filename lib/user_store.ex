@@ -22,14 +22,7 @@ defmodule SSIExport.UserStore do
   def handle_call({:get_user_info, user_id}, _from, state, data_mod \\ Data) do
     case List.keyfind(state, user_id, 0) do
       nil ->
-        user_info = data_mod.get_user_info(user_id)
-
-        user = %Data.User{
-          user_id: user_id,
-          real_name: user_info["real_name"],
-          title: user_info["profile"]["title"],
-          image_24: user_info["profile"]["image_24"]
-        }
+        user = data_mod.get_user_info(user_id)
 
         new_state = [{user_id, user} | state]
         {:reply, user, new_state}

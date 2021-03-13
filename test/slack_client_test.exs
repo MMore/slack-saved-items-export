@@ -1,4 +1,5 @@
 defmodule SlackClientTest do
+  alias Support.TestHelper
   use ExUnit.Case
 
   import Tesla.Mock
@@ -8,37 +9,29 @@ defmodule SlackClientTest do
       %{method: :get, url: "https://slack.com/api/stars.list"} ->
         %Tesla.Env{
           status: 200,
-          body: parsed_json_for_endpoint("stars.list")
+          body: TestHelper.parsed_json_for_endpoint("stars.list")
         }
 
       %{method: :get, url: "https://slack.com/api/conversations.replies"} ->
         %Tesla.Env{
           status: 200,
-          body: parsed_json_for_endpoint("conversations.replies")
+          body: TestHelper.parsed_json_for_endpoint("conversations.replies")
         }
 
       %{method: :get, url: "https://slack.com/api/conversations.info"} ->
         %Tesla.Env{
           status: 200,
-          body: parsed_json_for_endpoint("conversations.info")
+          body: TestHelper.parsed_json_for_endpoint("conversations.info_channel")
         }
 
       %{method: :get, url: "https://slack.com/api/users.info"} ->
         %Tesla.Env{
           status: 200,
-          body: parsed_json_for_endpoint("users.info")
+          body: TestHelper.parsed_json_for_endpoint("users.info")
         }
     end)
 
     :ok
-  end
-
-  defp parsed_json_for_endpoint(endpoint) do
-    path = Path.join(__DIR__, "fixtures")
-
-    Path.join(path, "response_#{endpoint}.json")
-    |> File.read!()
-    |> Jason.decode!()
   end
 
   test "get saved items" do

@@ -40,8 +40,6 @@ defmodule SSIExport.Data do
     channel_info_type(response.body["channel"], user_store)
   end
 
-  def get_user_info(user_id) do
-    {:ok, response} = SlackClient.get_user_info(user_id)
   defp channel_info_type(%{"is_channel" => true} = info, _) do
     {:public, info["name"]}
   end
@@ -59,11 +57,21 @@ defmodule SSIExport.Data do
     raise("error: channel_info_type unknown (#{inspect(info)})")
   end
 
-    response.body["user"]
+  def get_user_info(user_id, get_data_fn \\ &SlackClient.get_user_info/1) do
+    {:ok, response} = get_data_fn.(user_id)
+
+    user_info = response.body["user"]
+
+    %User{
+      user_id: user_id,
+      real_name: user_info["real_name"],
+      title: user_info["profile"]["title"],
+      image_24: user_info["profile"]["image_24"]
+    }
   end
 
-  def get_replies(channel_id, message_id) do
-    {:ok, response} = SlackClient.get_replies(channel_id, message_id)
+  def get_replies(channel_id, message_id, get_replies_fn \\ &SlackClient.get_replies/2) do
+    {:ok, response} = get_replies_fn.(channel_id, message_id)
 
     response.body["messages"]
   end

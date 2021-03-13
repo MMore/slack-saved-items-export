@@ -14,9 +14,11 @@ defmodule UserStoreTest do
     def get_user_info(user_id) do
       send(self(), {:asked_for_user_info, user_id})
 
-      %{
-        "real_name" => "Mickey Mouse",
-        "profile" => %{"title" => "Mouse", "image_24" => "image24"}
+      %Data.User{
+        user_id: "user_id",
+        real_name: "Mickey Mouse",
+        title: "Mouse",
+        image_24: "image24"
       }
     end
   end

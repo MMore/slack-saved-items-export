@@ -2,7 +2,7 @@
 
 [![Elixir CI](https://github.com/MMore/slack-saved-items-export/actions/workflows/elixir.yml/badge.svg)](https://github.com/MMore/slack-saved-items-export/actions/workflows/elixir.yml)
 
-Export your [saved messages in Slack](https://slack.com/intl/en-de/help/articles/360042650274-Save-messages-and-files-) for your own reference or as a simple archive to a neat HTML file. Don't lose your Slack bookmarks anymore.
+Export your [saved messages in Slack](https://slack.com/intl/en-de/help/articles/360042650274-Save-messages-and-files-) to a neat HTML file - for your own reference or as a simple archive. Don't lose your Slack bookmarks anymore.
 
 ## Setup
 
