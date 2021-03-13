@@ -28,7 +28,7 @@
           <a href="<%= message.permalink %>" target="_blank" class="hover:underline"><%= message.date_created %></a>
         </div>
         <div class="font-light text-gray-500 ml-3">
-          #<%= message.channel_name %>
+          <%= SSIExport.ExportView.show_channel(message.channel_type, message.channel_name) %>
         </div>
       </div>
       <div class="italic">

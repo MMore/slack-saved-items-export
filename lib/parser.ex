@@ -105,9 +105,12 @@ defmodule SSIExport.Parser do
 
     replies_task = Task.async(data_mod, :get_replies, [message.channel_id, message.message_id])
 
+    channel_info = Task.await(channel_name_task, :infinity)
+
     %Data.SavedMessage{
       message
-      | channel_name: Task.await(channel_name_task, :infinity),
+      | channel_name: elem(channel_info, 1),
+        channel_type: elem(channel_info, 0),
         user: Task.await(user_info_task, :infinity),
         replies: reply_parser_fn.(Task.await(replies_task, :infinity))
     }

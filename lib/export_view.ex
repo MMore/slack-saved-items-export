@@ -14,4 +14,9 @@ defmodule SSIExport.ExportView do
     :reply,
     :show_profile_image?
   ])
+
+  EEx.function_from_file(:def, :show_channel, Path.join(@template_path, "channel.eex"), [
+    :channel_type,
+    :channel_name
+  ])
 end

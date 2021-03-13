@@ -1,0 +1,28 @@
+{
+    "ok": true,
+    "channel": {
+        "id": "G2YTXSK1S",
+        "is_channel": false,
+        "is_group": false,
+        "is_im": false,
+        "created": 1478374063,
+        "is_archived": false,
+        "is_general": false,
+        "unlinked": 0,
+        "is_shared": false,
+        "parent_conversation": null,
+        "creator": "U0M9U2QKH",
+        "is_ext_shared": false,
+        "is_org_shared": false,
+        "shared_team_ids": [
+            "EXAMPLE"
+        ],
+        "pending_shared": [],
+        "pending_connected_team_ids": [],
+        "is_pending_ext_shared": false,
+        "is_member": true,
+        "is_private": true,
+        "is_mpim": false,
+        "last_read": "1614965497.000400"
+    }
+}

@@ -5,7 +5,7 @@ defmodule ParserTest do
 
   defmodule TestStore do
     def get_channel_name(channel_id) do
-      "channel_name_#{channel_id}"
+      {:public, "channel_name_#{channel_id}"}
     end
 
     def get_user_info(user_id) do
@@ -131,6 +131,7 @@ defmodule ParserTest do
              %Data.SavedMessage{
                channel_id: "C1VUNGG7L",
                channel_name: "channel_name_C1VUNGG7L",
+               channel_type: :public,
                date_created: 1_614_190_396,
                message_id: "1614163736.005600",
                replies: "replies_C1VUNGG7L_1614163736.005600",

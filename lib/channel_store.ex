@@ -22,9 +22,9 @@ defmodule SSIExport.ChannelStore do
   def handle_call({:get_channel_name, channel_id}, _from, state, data_mod \\ Data) do
     case List.keyfind(state, channel_id, 0) do
       nil ->
-        channel_name = data_mod.get_channel_name(channel_id)
-        new_state = [{channel_id, channel_name} | state]
-        {:reply, channel_name, new_state}
+        channel_info = data_mod.get_channel_info(channel_id)
+        new_state = [{channel_id, channel_info} | state]
+        {:reply, channel_info, new_state}
 
       {_channel_id, channel_name} ->
         {:reply, channel_name, state}

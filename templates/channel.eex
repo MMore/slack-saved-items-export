@@ -1,0 +1,23 @@
+<div class="font-light text-gray-500 ml-3">
+  <%= if channel_type == :private_group do %>
+    <div class="flex items-center">
+      <%# heroicons:small:lock-closed %>
+      <svg class="flex-shrink-0 h-4 w-4 mr-0.5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+      </svg>
+      <%= channel_name %>
+    </div>
+  <% else %>
+    <%= if channel_type == :im do %>
+      <div class="flex items-center">
+        <%# heroicons:small:user %>
+        <svg class="flex-shrink-0 h-4 w-4 mr-0.5 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+        </svg>
+        <%= channel_name %>
+      </div>
+    <% else %>
+      #<%= channel_name %>
+    <% end %>
+  <% end %>
+</div>

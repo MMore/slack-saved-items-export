@@ -1,0 +1,41 @@
+{
+    "ok": true,
+    "channel": {
+        "id": "D0ND3ML8N",
+        "created": 1456125590,
+        "is_archived": false,
+        "is_im": true,
+        "is_org_shared": false,
+        "user": "U0M9LEYBB",
+        "last_read": "1603886926.000500",
+        "latest": {
+            "client_msg_id": "db681980-d5c4-4f1b-8ded-324ecd9af9c0",
+            "type": "message",
+            "text": "cool",
+            "user": "U0ND3MJ6A",
+            "ts": "1603886926.000500",
+            "team": "EXAMPLE",
+            "blocks": [
+                {
+                    "type": "rich_text",
+                    "block_id": "rqe",
+                    "elements": [
+                        {
+                            "type": "rich_text_section",
+                            "elements": [
+                                {
+                                    "type": "text",
+                                    "text": "cool"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "unread_count": 0,
+        "unread_count_display": 0,
+        "is_open": true,
+        "priority": 0
+    }
+}
