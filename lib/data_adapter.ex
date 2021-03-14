@@ -1,4 +1,4 @@
-defmodule SSIExport.Data do
+defmodule SSIExport.DataAdapter do
   alias SSIExport.SlackClient
   alias SSIExport.UserStore
 

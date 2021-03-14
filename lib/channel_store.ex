@@ -1,5 +1,5 @@
 defmodule SSIExport.ChannelStore do
-  alias SSIExport.Data
+  alias SSIExport.DataAdapter
 
   use GenServer
 
@@ -19,7 +19,7 @@ defmodule SSIExport.ChannelStore do
     {:ok, init_arg}
   end
 
-  def handle_call({:get_channel_name, channel_id}, _from, state, data_mod \\ Data) do
+  def handle_call({:get_channel_name, channel_id}, _from, state, data_mod \\ DataAdapter) do
     case List.keyfind(state, channel_id, 0) do
       nil ->
         channel_info = data_mod.get_channel_info(channel_id)

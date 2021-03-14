@@ -1,6 +1,6 @@
 defmodule SSIExport.Parser do
   alias SSIExport.ChannelStore
-  alias SSIExport.Data
+  alias SSIExport.DataAdapter
   alias SSIExport.UserStore
 
   def parse_saved_items(items, enricher_fn \\ &enrich_saved_message/1) do
@@ -15,19 +15,19 @@ defmodule SSIExport.Parser do
   end
 
   defp parse_saved_message(message) do
-    saved_message = %Data.SavedMessage{
+    saved_message = %DataAdapter.SavedMessage{
       channel_id: message["channel"],
       date_created: DateTime.from_unix!(message["date_create"]),
       message_id: message["message"]["ts"],
       permalink: message["message"]["permalink"],
       text: parse_message_text(message["message"]["text"]),
-      user: %Data.User{user_id: message["message"]["user"]}
+      user: %DataAdapter.User{user_id: message["message"]["user"]}
     }
 
     # bot user?
     if saved_message.user.user_id == nil do
-      user = %Data.User{saved_message.user | real_name: message["message"]["username"]}
-      %Data.SavedMessage{saved_message | user: user}
+      user = %DataAdapter.User{saved_message.user | real_name: message["message"]["username"]}
+      %DataAdapter.SavedMessage{saved_message | user: user}
     else
       saved_message
     end
@@ -102,10 +102,10 @@ defmodule SSIExport.Parser do
   end
 
   def enrich_saved_message(
-        %Data.SavedMessage{} = message,
+        %DataAdapter.SavedMessage{} = message,
         channel_store \\ ChannelStore,
         user_store \\ UserStore,
-        data_mod \\ Data,
+        data_mod \\ DataAdapter,
         reply_parser_fn \\ &parse_replies/1
       ) do
     channel_name_task = Task.async(channel_store, :get_channel_name, [message.channel_id])
@@ -121,7 +121,7 @@ defmodule SSIExport.Parser do
 
     channel_info = Task.await(channel_name_task, :infinity)
 
-    saved_message = %Data.SavedMessage{
+    saved_message = %DataAdapter.SavedMessage{
       message
       | channel_name: elem(channel_info, 1),
         channel_type: elem(channel_info, 0),
@@ -129,7 +129,7 @@ defmodule SSIExport.Parser do
     }
 
     if user_info_task != nil do
-      %Data.SavedMessage{saved_message | user: Task.await(user_info_task, :infinity)}
+      %DataAdapter.SavedMessage{saved_message | user: Task.await(user_info_task, :infinity)}
     else
       saved_message
     end
@@ -147,11 +147,11 @@ defmodule SSIExport.Parser do
   end
 
   defp parse_reply(reply, user_store) do
-    %Data.Reply{
+    %DataAdapter.Reply{
       date_created: convert_slack_timestamp_to_datetime(reply["ts"]),
       message_id: reply["ts"],
       text: parse_message_text(reply["text"], user_store),
-      user: %Data.User{user_id: reply["user"]}
+      user: %DataAdapter.User{user_id: reply["user"]}
     }
   end
 
@@ -159,9 +159,9 @@ defmodule SSIExport.Parser do
     String.split(timestamp, ".") |> hd() |> String.to_integer() |> DateTime.from_unix!()
   end
 
-  def enrich_reply(%Data.Reply{} = reply, user_store \\ UserStore) do
+  def enrich_reply(%DataAdapter.Reply{} = reply, user_store \\ UserStore) do
     user_info = user_store.get_user_info(reply.user.user_id)
 
-    %Data.Reply{reply | user: user_info}
+    %DataAdapter.Reply{reply | user: user_info}
   end
 end

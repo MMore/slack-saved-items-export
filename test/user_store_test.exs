@@ -1,9 +1,9 @@
 defmodule UserStoreTest do
-  alias SSIExport.Data
+  alias SSIExport.DataAdapter
   alias SSIExport.UserStore
   use ExUnit.Case
 
-  @user_fake %Data.User{
+  @user_fake %DataAdapter.User{
     user_id: "user_id",
     real_name: "Mickey Mouse",
     title: "Mouse",
@@ -14,7 +14,7 @@ defmodule UserStoreTest do
     def get_user_info(user_id) do
       send(self(), {:asked_for_user_info, user_id})
 
-      %Data.User{
+      %DataAdapter.User{
         user_id: "user_id",
         real_name: "Mickey Mouse",
         title: "Mouse",
@@ -33,7 +33,7 @@ defmodule UserStoreTest do
   test "asks NOT external service for user name if in cache" do
     current_state = [
       {"user_id", @user_fake},
-      {"123", %Data.User{@user_fake | user_id: "123", real_name: "Donald Duck"}}
+      {"123", %DataAdapter.User{@user_fake | user_id: "123", real_name: "Donald Duck"}}
     ]
 
     assert UserStore.handle_call(

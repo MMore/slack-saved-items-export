@@ -1,5 +1,5 @@
 defmodule ExporterTest do
-  alias SSIExport.Data
+  alias SSIExport.DataAdapter
   alias SSIExport.Exporter
   use ExUnit.Case
 
@@ -25,17 +25,17 @@ defmodule ExporterTest do
 
   test "decorates data structure with some nice html" do
     messages = [
-      %Data.SavedMessage{
+      %DataAdapter.SavedMessage{
         channel_id: "C1VUNGG7L",
         channel_name: "channel_name",
         date_created: 1_614_190_396,
         message_id: "1614163736.005600",
         permalink: "https://example.slack.com/archives/C1VUNGG7L/p1614163736005600",
         replies: [
-          %Data.Reply{
+          %DataAdapter.Reply{
             message_id: "1613766054.045300",
             text: "Looks interesting",
-            user: %Data.User{
+            user: %DataAdapter.User{
               user_id: "UH9T09HMW",
               real_name: "Donald Duck",
               title: "Duck",
@@ -44,7 +44,7 @@ defmodule ExporterTest do
           }
         ],
         text: "A message with replies :smile:",
-        user: %Data.User{
+        user: %DataAdapter.User{
           user_id: "U8S7YRMK2",
           real_name: "Mickey Mouse",
           title: "Mice",

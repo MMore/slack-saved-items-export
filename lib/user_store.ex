@@ -1,5 +1,5 @@
 defmodule SSIExport.UserStore do
-  alias SSIExport.Data
+  alias SSIExport.DataAdapter
 
   use GenServer
 
@@ -19,7 +19,7 @@ defmodule SSIExport.UserStore do
     {:ok, init_arg}
   end
 
-  def handle_call({:get_user_info, user_id}, _from, state, data_mod \\ Data) do
+  def handle_call({:get_user_info, user_id}, _from, state, data_mod \\ DataAdapter) do
     case List.keyfind(state, user_id, 0) do
       nil ->
         user = data_mod.get_user_info(user_id)
