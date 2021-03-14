@@ -59,7 +59,9 @@ defmodule SSIExport.CLI do
   end
 
   def print_help() do
-    IO.puts("Export your saved items in Slack as HTML.\n")
+    version = SSIExport.Application.version()
+    IO.puts("Export your saved items in Slack as HTML.")
+    IO.puts("Version #{version}\n")
     IO.puts("Before running set the environment variable #{@token_environment_variable_name}.\n")
 
     IO.puts(
@@ -67,6 +69,6 @@ defmodule SSIExport.CLI do
     )
 
     IO.puts("  --output <file-path> - Set the destination file path.")
-    IO.puts("  --help - Print this help message\n")
+    IO.puts("  --help               - Print this help message\n")
   end
 end

@@ -30,12 +30,12 @@ Create a "[Slack App](https://api.slack.com/authentication/basics)" in your Slac
 - stars:read
 - users:read
 
-After installation you get a [user token](https://api.slack.com/authentication/token-types#user) which starts usually with `xoxp-`. Set this token as environment variable:
+After installation you get a [user token](https://api.slack.com/authentication/token-types#user) which starts usually with `xoxp-`. Set this token as environment variable and run the program:
 
 ```
 export SLACK_SAVED_ITEMS_EXPORT_OAUTH_TOKEN=xoxp-YOUR-TOKEN
-slack-saved-items-export --help
-slack-saved-items-export --output export.html --show-profile-image
+./slack-saved-items-export --help
+./slack-saved-items-export --output export.html --show-profile-image
 ```
 
 ## Example output

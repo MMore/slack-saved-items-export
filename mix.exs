@@ -21,7 +21,7 @@ defmodule SSIExport.MixProject do
   end
 
   defp escript do
-    [main_module: SSIExport.CLI]
+    [main_module: SSIExport.CLI, name: "slack-saved-items-export"]
   end
 
   # Run "mix help deps" to learn about dependencies.
