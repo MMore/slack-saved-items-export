@@ -42,6 +42,15 @@ export SLACK_SAVED_ITEMS_EXPORT_OAUTH_TOKEN=xoxp-YOUR-TOKEN
 
 ![example](https://user-images.githubusercontent.com/172760/110870228-53744480-82cc-11eb-8400-af95e369f858.png)
 
+## Known issues
+
+Currently this program fulfills my personal purpose. Depending on future necessities the following issues might be good to know:
+
+- API pagination is not taken into consideration
+- no retry in case of ratelimiting
+- unnamed private conversations between multiple users (mpim) are not implemented
+- not all text formatting options are implemented; implementation should be revised
+
 ## License
 
 Available under the MIT license. See the [LICENSE](LICENSE)
