@@ -31,7 +31,7 @@ defmodule ParserTest do
                channel_id: "G2YTXSK1S",
                channel_name: nil,
                channel_type: nil,
-               date_created: ~U[2021-03-13 10:49:50Z],
+               date_created: ~U[2021-03-05 17:31:37Z],
                message_id: "1614965497.000400",
                permalink: "https://example.slack.com/archives/G2YTXSK1S/p1614965497000400",
                replies: [],
@@ -46,7 +46,7 @@ defmodule ParserTest do
              %DataAdapter.SavedMessage{
                channel_id: "C1VUNGG7L",
                channel_name: nil,
-               date_created: ~U[2021-02-24 18:13:16Z],
+               date_created: ~U[2021-02-24 10:48:56Z],
                message_id: "1614163736.005600",
                permalink: "https://example.slack.com/archives/C1VUNGG7L/p1614163736005600",
                replies: [],
@@ -56,7 +56,7 @@ defmodule ParserTest do
              %DataAdapter.SavedMessage{
                channel_id: "C0LV45YRJ",
                channel_name: nil,
-               date_created: ~U[2021-02-22 10:09:46Z],
+               date_created: ~U[2021-02-19 15:35:35Z],
                message_id: "1613748935.045000",
                permalink: "https://example.slack.com/archives/C0LV45YRJ/p1613748935045000",
                replies: [],

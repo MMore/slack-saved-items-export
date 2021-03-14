@@ -17,7 +17,7 @@ defmodule SSIExport.Parser do
   defp parse_saved_message(message) do
     saved_message = %DataAdapter.SavedMessage{
       channel_id: message["channel"],
-      date_created: DateTime.from_unix!(message["date_create"]),
+      date_created: convert_slack_timestamp_to_datetime(message["message"]["ts"]),
       message_id: message["message"]["ts"],
       permalink: message["message"]["permalink"],
       text: parse_message_text(message["message"]["text"]),
