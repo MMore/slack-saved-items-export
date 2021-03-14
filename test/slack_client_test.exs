@@ -34,10 +34,24 @@ defmodule SlackClientTest do
     :ok
   end
 
-  test "get saved items" do
-    assert {:ok, %Tesla.Env{} = env} = SSIExport.SlackClient.get_saved_items()
-    assert env.status == 200
-    assert Enum.count(env.body["items"]) == 4
+  describe "get saved items" do
+    test "successfully returns items" do
+      assert {:ok, %Tesla.Env{} = env} = SSIExport.SlackClient.get_saved_items()
+      assert env.status == 200
+      assert Enum.count(env.body["items"]) == 4
+    end
+
+    test "returns error with reason" do
+      mock(fn
+        %{method: :get, url: "https://slack.com/api/stars.list"} ->
+          %Tesla.Env{
+            status: 200,
+            body: %{"ok" => false, "error" => "unknown error"}
+          }
+      end)
+
+      assert {:error, "unknown error"} == SSIExport.SlackClient.get_saved_items()
+    end
   end
 
   test "get replies for message" do

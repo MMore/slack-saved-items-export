@@ -56,7 +56,6 @@ defmodule SSIExport.CLI do
     expanded_path = Path.expand(options.destination_file_path)
     IO.puts(~s(Exporting to "#{expanded_path}"...))
     exporter_fn.(options)
-    IO.puts("...done.")
   end
 
   def print_help() do

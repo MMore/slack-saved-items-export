@@ -6,12 +6,30 @@ defmodule SSIExport.Exporter do
     defstruct destination_file_path: nil, show_profile_image?: false
   end
 
-  def export(%Options{} = options) do
-    {:ok, response} = SlackClient.get_saved_items()
+  def export(
+        %Options{} = options,
+        get_saved_items_fn \\ &SlackClient.get_saved_items/0,
+        parser_fn \\ &Parser.parse_saved_items/1,
+        decorate_fn \\ &decorate/2,
+        write_file_fn \\ &write_output_to_file/2
+      ) do
+    case get_saved_items_fn.() do
+      {:ok, response} ->
+        parser_fn.(response.body["items"])
+        |> decorate_fn.(options.show_profile_image?)
+        |> write_file_fn.(options.destination_file_path)
 
-    Parser.parse_saved_items(response.body["items"])
-    |> decorate(options.show_profile_image?)
-    |> write_output_to_file(options.destination_file_path)
+        IO.puts("...done.")
+
+      {:error, "missing_scope"} ->
+        IO.puts("error: used token is not granted the required scope permissions")
+
+      {:error, "invalid_auth"} ->
+        IO.puts("error: authentication token is invalid")
+
+      {:error, reason} ->
+        IO.puts("error: #{reason}")
+    end
   end
 
   def decorate(messages, show_profile_image? \\ false) do

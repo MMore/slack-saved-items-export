@@ -11,7 +11,14 @@ defmodule SSIExport.SlackClient do
   plug(Tesla.Middleware.JSON)
 
   def get_saved_items() do
-    get("/stars.list")
+    {:ok, response} = get("/stars.list")
+    body = response.body
+
+    if body["ok"] do
+      {:ok, response}
+    else
+      {:error, body["error"]}
+    end
   end
 
   def get_replies(channel_id, message_id) do
