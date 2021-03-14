@@ -1,0 +1,23 @@
+<div class="flex flex-wrap">
+  <%= if show_profile_image? do %>
+    <img src="<%= user.image_24 %>" class="mr-1" />
+  <% end %>
+  <div class="font-bold tracking-wide">
+    <span title="<%= user.title %>"><%= user.real_name %></span>
+  </div>
+  <div class="font-light text-gray-500 ml-3">
+    <%= if permalink != nil do %>
+      <a href="<%= permalink %>" target="_blank" class="hover:underline"><%= date_created %></a>
+    <% else %>
+      <%= date_created %>
+    <% end %>
+  </div>
+  <%= if channel_type != nil and channel_name != nil do %>
+    <div class="font-light text-gray-500 ml-3">
+      <%= SSIExport.ExportView.show_channel(channel_type, channel_name) %>
+    </div>
+  <% end %>
+</div>
+<div class="italic">
+  <%= text %>
+</div>

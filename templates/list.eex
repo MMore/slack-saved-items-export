@@ -17,23 +17,7 @@
   <div class="flex flex-col space-y-2">
     <%= for message <- messages do %>
     <div class="flex-1 bg-gray-100 border-2">
-      <div class="flex flex-wrap">
-        <%= if show_profile_image? do %>
-          <img src="<%= message.user.image_24 %>" class="mr-1" />
-        <% end %>
-        <div class="font-bold tracking-wide">
-          <span title="<%= message.user.title %>"><%= message.user.real_name %></span>
-        </div>
-        <div class="font-light text-gray-500 ml-3">
-          <a href="<%= message.permalink %>" target="_blank" class="hover:underline"><%= message.date_created %></a>
-        </div>
-        <div class="font-light text-gray-500 ml-3">
-          <%= SSIExport.ExportView.show_channel(message.channel_type, message.channel_name) %>
-        </div>
-      </div>
-      <div class="italic">
-        <%= message.text %>
-      </div>
+      <%= SSIExport.ExportView.show_message(message.date_created, message.text, message.user, message.channel_type, message.channel_name, message.permalink, show_profile_image?) %>
       <div class="flex flex-col space-y-1 ml-7">
         <%= for reply <- message.replies do %>
           <%= SSIExport.ExportView.show_reply(reply, show_profile_image?) %>

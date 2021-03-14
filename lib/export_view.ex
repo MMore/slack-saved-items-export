@@ -10,6 +10,16 @@ defmodule SSIExport.ExportView do
     :show_profile_image?
   ])
 
+  EEx.function_from_file(:def, :show_message, Path.join(@template_path, "message.eex"), [
+    :date_created,
+    :text,
+    :user,
+    :channel_type,
+    :channel_name,
+    :permalink,
+    :show_profile_image?
+  ])
+
   EEx.function_from_file(:def, :show_reply, Path.join(@template_path, "reply.eex"), [
     :reply,
     :show_profile_image?
