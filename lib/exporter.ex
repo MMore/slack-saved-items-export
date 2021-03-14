@@ -13,23 +13,11 @@ defmodule SSIExport.Exporter do
         decorate_fn \\ &decorate/2,
         write_file_fn \\ &write_output_to_file/2
       ) do
-    case get_saved_items_fn.() do
-      {:ok, response} ->
-        parser_fn.(response.body["items"])
-        |> decorate_fn.(options.show_profile_image?)
-        |> write_file_fn.(options.destination_file_path)
+    {:ok, response} = get_saved_items_fn.()
 
-        IO.puts("...done.")
-
-      {:error, "missing_scope"} ->
-        IO.puts("error: used token is not granted the required scope permissions")
-
-      {:error, "invalid_auth"} ->
-        IO.puts("error: authentication token is invalid")
-
-      {:error, reason} ->
-        IO.puts("error: #{reason}")
-    end
+    parser_fn.(response.body["items"])
+    |> decorate_fn.(options.show_profile_image?)
+    |> write_file_fn.(options.destination_file_path)
   end
 
   def decorate(messages, show_profile_image? \\ false) do

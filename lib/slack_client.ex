@@ -12,25 +12,60 @@ defmodule SSIExport.SlackClient do
 
   def get_saved_items() do
     {:ok, response} = get("/stars.list")
+
+    handle_response(response)
+  end
+
+  def get_replies(channel_id, message_id) do
+    {:ok, response} = get("/conversations.replies", query: [channel: channel_id, ts: message_id])
+
+    handle_response(response)
+  end
+
+  def get_channel_info(channel_id) do
+    {:ok, response} = get("/conversations.info", query: [channel: channel_id])
+
+    handle_response(response)
+  end
+
+  def get_user_info(user_id) do
+    {:ok, response} = get("/users.info", query: [user: user_id])
+
+    handle_response(response)
+  end
+
+  def handle_response(response, halt_fn \\ &halt_program/0) do
     body = response.body
 
     if body["ok"] do
       {:ok, response}
     else
-      {:error, body["error"]}
+      handle_error(body["error"], halt_fn)
     end
   end
 
-  def get_replies(channel_id, message_id) do
-    get("/conversations.replies", query: [channel: channel_id, ts: message_id])
+  defp handle_error("missing_scope", halt_fn) do
+    IO.puts("error: used token is not granted the required scope permissions")
+    halt_fn.()
   end
 
-  def get_channel_info(channel_id) do
-    get("/conversations.info", query: [channel: channel_id])
+  defp handle_error("invalid_auth", halt_fn) do
+    IO.puts("error: authentication token is invalid")
+    halt_fn.()
   end
 
-  def get_user_info(user_id) do
-    get("/users.info", query: [user: user_id])
+  defp handle_error("ratelimited", halt_fn) do
+    IO.puts("error: request has been ratelimited by Slack")
+    halt_fn.()
+  end
+
+  defp handle_error(reason, halt_fn) do
+    IO.puts("error: #{reason}")
+    halt_fn.()
+  end
+
+  defp halt_program do
+    System.halt(1)
   end
 
   defp get_token_from_environment() do

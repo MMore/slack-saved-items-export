@@ -41,7 +41,7 @@ defmodule CLITest do
       assert capture_io(fn ->
                CLI.main(["--output", output_file], fn x -> send(self(), {:options, x}) end)
              end) ==
-               ~s(Exporting to "#{destination_path}"...\n)
+               ~s(Exporting to "#{destination_path}"...\n...done.\n)
 
       assert_received {:options,
                        %Exporter.Options{

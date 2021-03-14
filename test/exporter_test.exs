@@ -3,8 +3,6 @@ defmodule ExporterTest do
   alias SSIExport.Exporter
   use ExUnit.Case
 
-  import ExUnit.CaptureIO
-
   doctest SSIExport.Exporter
 
   describe "export" do
@@ -13,37 +11,15 @@ defmodule ExporterTest do
       options = %Exporter.Options{destination_file_path: path}
       response = %{body: Support.TestHelper.parsed_json_for_endpoint("stars.list")}
 
-      assert capture_io(fn ->
-               Exporter.export(
-                 options,
-                 fn -> {:ok, response} end,
-                 fn x -> x end,
-                 fn items, _ ->
-                   items
-                 end,
-                 fn _output, path -> send(self(), {:write_file, "output", path}) end
-               )
-             end) == "...done.\n"
-
-      assert_received {:write_file, "output", ^path}
-    end
-
-    test "shows missing_scope error" do
-      assert capture_io(fn ->
-               Exporter.export(%Exporter.Options{}, fn -> {:error, "missing_scope"} end)
-             end) == "error: used token is not granted the required scope permissions\n"
-    end
-
-    test "shows invalid_auth error" do
-      assert capture_io(fn ->
-               Exporter.export(%Exporter.Options{}, fn -> {:error, "invalid_auth"} end)
-             end) == "error: authentication token is invalid\n"
-    end
-
-    test "shows other errors" do
-      assert capture_io(fn ->
-               Exporter.export(%Exporter.Options{}, fn -> {:error, "whatever"} end)
-             end) == "error: whatever\n"
+      assert Exporter.export(
+               options,
+               fn -> {:ok, response} end,
+               fn x -> x end,
+               fn items, _ ->
+                 items
+               end,
+               fn _output, path -> {:write_file, "output", path} end
+             ) == {:write_file, "output", path}
     end
   end
 
