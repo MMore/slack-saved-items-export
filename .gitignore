@@ -21,7 +21,7 @@ erl_crash.dump
 
 # Ignore package tarball (built via "mix hex.build").
 slack_saved_items_export-*.tar
-/slack_saved_items_export
+/slack-saved-items-export
 
 
 # Temporary files for e.g. tests

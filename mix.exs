@@ -4,7 +4,7 @@ defmodule SSIExport.MixProject do
   def project do
     [
       app: :slack_saved_items_export,
-      version: "0.1.0",
+      version: "1.0.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       escript: escript(),
